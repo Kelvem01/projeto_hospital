@@ -3,6 +3,8 @@ from cadastro import *
 import sqlite3
 conexao = sqlite3.connect("gestaoHospitalar.sqlite3")
 
+#Oi do Sherlon
+
 while True:
 	print("---- Gestão Hospitalar ----")
 	print("O que você deseja fazer?")
