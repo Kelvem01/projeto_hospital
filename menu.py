@@ -30,12 +30,14 @@ while True:
 		else:
 			print("Opção inválida!")
 	elif opcao == 2:
-		print("Opções: 1) Cadastrar, 2) Listar")
+		print("Opções: 1) Cadastrar, 2) Listar, 3) Desmarcar")
 		tipo_procedimento = int(input("Digite o a operação desejada: "))
 		if tipo_procedimento == 1:
 			cadastrar_procedimento(conexao)
 		elif tipo_procedimento == 2:
-			pass #(IMPLEMENTAR)
+			listar_dados(conexao, "Procedimento")
+		elif tipo_procedimento == 3:
+			desmarcar_procedimento(conexao)
 		else:
 			print("Opção inválida!")
 	else:

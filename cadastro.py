@@ -34,18 +34,42 @@ def cadastrar_medico(conn, tabela):
 	cursor.execute(comando, values)
 	conn.commit()
 
+def listar_dados(conn, tabela):
+	print("------------ Dados Recuperados ------------")
+	cursor = conn.cursor()
+	comando = f"""SELECT * FROM {tabela}"""
+	cursor.execute(comando)
+	dados = cursor.fetchall()
+	for dado in dados:
+		print(dado)
+
 def cadastrar_procedimento(conn):
 	cursor = conn.cursor()
-	comando = f"""INSERT INTO Procedimento (tipo, cliente_id, cirurgiao_id, anestesista_id, sala) VALUES (?,?,?,?,?)"""
-	tipo  = input("Selecione o tipo de procedimento: ")
+	comando = f"""INSERT INTO Procedimento (tipo, cliente_id, cirurgiao_id, anestesista_id, sala, status) VALUES (?,?,?,?,?,?)"""	
+	tipo  = input("Descreva o tipo de procedimento: ")
 
-	#(IMPLEMENTAR) Listar os clientes e seus IDs
+	#Listar os clientes e seus IDs
+	listar_dados(conn, "Cliente")
 	cliente_id = int(input("Selecione o cliente: "))
-	#(IMPLEMENTAR) Listar os cirurgioes e seus IDs
+
+	#Listar os cirurgioes e seus IDs
+	listar_dados(conn, "Cirurgiao")
 	cirurgiao_id = int(input("Selecione o cirurgiao: "))
-	#(IMPLEMENTAR) Listar os anestesistas e seus IDs
+
+	#Listar os anestesistas e seus IDs
+	listar_dados(conn, "Anestesista")
 	anestesista_id = int(input("Selecione o anestesista: "))
+
 	sala  = int(input("Digite a sala: "))
-	values = [tipo, cliente_id, cirurgiao_id, anestesista_id, sala]
+	values = [tipo, cliente_id, cirurgiao_id, anestesista_id, sala, "Agendado"]
 	cursor.execute(comando, values)
 	conn.commit()
+
+def desmarcar_procedimento(conn):
+	cursor = conn.cursor()
+	listar_dados(conn, "Procedimento")
+	id = int(input("Selecione o ID do procedimento a ser desmarcado: "))
+	comando = f"""UPDATE Procedimento SET status = "Cancelado" WHERE id = {id};"""	
+	cursor.execute(comando)
+	conn.commit()
+	

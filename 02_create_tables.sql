@@ -49,6 +49,7 @@ CREATE TABLE Procedimento (
 	cirurgiao_id INT NOT NULL,
 	anestesista_id INT NOT NULL,
 	sala INT,
+	status TEXT(50),
 	
 	FOREIGN KEY (cliente_id) REFERENCES Cliente(id),
 	FOREIGN KEY (cirurgiao_id)  REFERENCES Cirurgiao(id),
