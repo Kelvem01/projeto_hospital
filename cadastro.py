@@ -4,7 +4,16 @@ def cadastrar_usuario(conn):
 	nivel = input("Digite o nivel de acesso: ") #1)basico, 2)parcial, 3)completo
 	nome  = input("Digite o seu nome: ")
 	email = input("Digite o seu email: ")
-	senha = input("Digite a sua senha: ")
+	
+	while True:
+		senha = input("Digite a sua senha: ")
+		con_senha = input('confirme sua senha :')
+		if con_senha == senha:
+			print('cadastro realizado com sucesso!')
+			break
+		else:
+			print('senha invalida!')
+
 	values = [nivel, nome, email, senha]
 	cursor.execute(comando, values)
 	conn.commit()
