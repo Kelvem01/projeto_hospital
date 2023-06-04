@@ -1,3 +1,5 @@
+import hashlib 
+
 def cadastrar_usuario(conn):
 	cursor = conn.cursor()
 	comando = f"""INSERT INTO Usuario (nivel, nome, email, senha) VALUES (?,?,?,?)"""
