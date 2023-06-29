@@ -84,3 +84,24 @@ def desmarcar_procedimento(conn):
 	cursor.execute(comando)
 	conn.commit()
 	
+
+def cadastrar_materiais_equipamentos(conn):
+	cursor = conn.cursor()
+	comando = f"""INSERT INTO MateriaisEquipamentos (tipo, descricao, quantidade , valor) VALUES (?,?,?,?)"""
+	tipo = input("Digite o tipo do material: ")
+	descricao = input("Digite a descricao do material: ")
+	quantidade = int(input("Digite a quantidade : "))
+	valor = float(input('Digite o valor: '))
+	values = [tipo, descricao, quantidade , valor]
+	cursor.execute(comando, values)
+	conn.commit()
+
+def  atualizar_materias_equipamentos(conn):
+	cursor = conn.cursor()
+	listar_dados(conn, "MateriaisEquipamentos")
+	id = int(input("Selecione o ID do material a ser atualizado: "))
+	quantidade = int(input("Digite a nova quantidade : "))
+	comando = f"""UPDATE MateriaisEquipamentos SET quantidade = {quantidade} WHERE id = {id}"""
+	
+	cursor.execute(comando)
+	conn.commit()
