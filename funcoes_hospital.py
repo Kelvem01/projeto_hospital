@@ -30,6 +30,8 @@ def cadastrar_cliente(conn):
 	rg = input("Digite o seu RG: ")
 	profissao = input("Digite a sua profissao: ")
 	values = [nome, telefone, email, cpf, rg, profissao]
+
+	print('Cadastrado realizado com sucesso!  ')
 	cursor.execute(comando, values)
 	conn.commit()
 
@@ -42,6 +44,7 @@ def cadastrar_medico(conn, tabela):
 	crm = input("Digite o seu CRM: ")
 	telefone  = input("Digite o seu telefone: ")
 	values = [nome, cpf, email, crm, telefone]
+	print('Cadastrado realizado com sucesso!  ')
 	cursor.execute(comando, values)
 	conn.commit()
 
@@ -94,6 +97,7 @@ def cadastrar_materiais_equipamentos(conn):
 	valor = float(input('Digite o valor: '))
 	values = [tipo, descricao, quantidade , valor]
 	cursor.execute(comando, values)
+	print('Material cadastrado com sucesso!  ')
 	conn.commit()
 
 def  atualizar_materias_equipamentos(conn):
@@ -102,6 +106,7 @@ def  atualizar_materias_equipamentos(conn):
 	id = int(input("Selecione o ID do material a ser atualizado: "))
 	quantidade = int(input("Digite a nova quantidade : "))
 	comando = f"""UPDATE MateriaisEquipamentos SET quantidade = {quantidade} WHERE id = {id}"""
+	print('Cadastrado de nova quantidade realizado com sucesso!  ')
 	
 	cursor.execute(comando)
 	conn.commit()
@@ -112,6 +117,7 @@ def atualizar_nome_de_materiais(conn): # feito uma nova função para atualizar 
     id = int(input("Selecione o ID do material a ser atualizado: "))
     material = input("Digite o nome do material: ")
     comando = f"""UPDATE MateriaisEquipamentos SET tipo = '{material}' WHERE id = {id}"""
+    print (f'Atualizado com sucesso! ') # adicionado para mostrar a atualização do nome 
 
     cursor.execute(comando)
     conn.commit()
