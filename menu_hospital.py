@@ -1,4 +1,4 @@
-from cadastro import *
+from funcoes_hospital import *
 
 import sqlite3
 conexao = sqlite3.connect("gestaoHospitalar.sqlite3")
@@ -42,7 +42,7 @@ while True:
 		else:
 			print("Opção inválida!")
 	elif opcao == 3:
-		print("Opções: 1) Cadastrar, 2) Listar, 3) Atualizar estoque ")
+		print("Opções: 1) Cadastrar, 2) Listar, 3) Atualizar estoque, 4) Atualizar tipo de Material")
 		tipo_procedimento = int(input("Digite o a operação desejada: "))
 		if tipo_procedimento == 1:
 			cadastrar_materiais_equipamentos(conexao)
@@ -50,6 +50,8 @@ while True:
 			listar_dados(conexao, "MateriaisEquipamentos")
 		elif tipo_procedimento == 3:
 			atualizar_materias_equipamentos(conexao)
+		elif tipo_procedimento ==4:
+			atualizar_nome_de_materiais(conexao)
 		else:
 			print("Opção inválida!")
 		

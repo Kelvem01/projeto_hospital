@@ -105,3 +105,13 @@ def  atualizar_materias_equipamentos(conn):
 	
 	cursor.execute(comando)
 	conn.commit()
+
+def atualizar_nome_de_materiais(conn): # feito uma nova função para atualizar nomes de materiais
+    cursor = conn.cursor()
+    listar_dados(conn, "MateriaisEquipamentos")
+    id = int(input("Selecione o ID do material a ser atualizado: "))
+    material = input("Digite o nome do material: ")
+    comando = f"""UPDATE MateriaisEquipamentos SET tipo = '{material}' WHERE id = {id}"""
+
+    cursor.execute(comando)
+    conn.commit()
