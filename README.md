@@ -53,7 +53,6 @@ Siga as etapas abaixo para executar o projeto em sua máquina local:
    ```
    $ flask run
    ```
-9. Acesse o sistema através do navegador no endereço `http://localhost:5000`.
 
 ## Contribuição
 Contribuições para o aprimoramento deste projeto são bem-vindas. Se você quiser contribuir, siga estas etapas:
@@ -80,4 +79,4 @@ Este projeto está licenciado sob a [MIT License](https://opensource.org/license
 Para mais informações ou dúvidas sobre o projeto, entre em contato:
 
 - Nome: Kelvem Ferreira 
-- E-mail: kelvemdasilva16@gmail.com.com
+- E-mail: kelvemdasilva16@gmail.com
