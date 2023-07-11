@@ -121,3 +121,29 @@ def atualizar_nome_de_materiais(conn): # feito uma nova função para atualizar 
 
     cursor.execute(comando)
     conn.commit()
+
+def faturamento(conn):
+	cursor = conn.cursor()
+	listar_dados(conn, "Cliente")
+	cliente_id = int(input("Selecione o ID do Cliente: "))
+	listar_dados(conn, "Procedimento")
+	procedimento_id = int(input("Selecione o ID do Procedimento: "))
+	qtdHorasSala = int(input("Selecione o tempo cirurgico(em minutos): "))
+	valorAnestesista= float (input(' digite o valor da anestesia: '))
+	comando = f"""INSERT INTO Faturamento (cliente_id, procedimento_id, qtdHorasSala, valorAnestesista) VALUES (?,?,?,?)"""
+	valores = [cliente_id, procedimento_id, qtdHorasSala, valorAnestesista]
+
+	cursor.execute(comando,valores)
+	conn.commit()
+
+def MateriaisEquipamentosProcedimento(conn):
+	cursor = conn.cursor()
+	listar_dados(conn, "MateriaisEquipamentos")
+	MateriaisEquipamentos_id = int(input("Selecione o ID do Material "))
+	listar_dados(conn, "Procedimento")
+	Procedimento_id = int(input("Selecione o ID do Procedimento: "))
+	comando = f"""INSERT INTO MateriaisEquipamentosProcedimento (MateriaisEquipamentos_id, Procedimento_id) VALUES (?,?)"""
+	valores = [MateriaisEquipamentos_id, Procedimento_id]
+
+	cursor.execute(comando,valores)
+	conn.commit()

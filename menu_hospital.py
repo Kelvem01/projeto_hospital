@@ -11,6 +11,7 @@ while True:
 	print("1) Cadastro de Usuários")
 	print("2) Procedimentos")
 	print("3) Cadastar Materiais e Equipamentos")
+	print("4) Faturamento")
 	print("0) Sair do Sistema")
 
 	opcao = int(input("Digite a opcao desejada: "))
@@ -31,7 +32,7 @@ while True:
 		else:
 			print("Opção inválida!")
 	elif opcao == 2:
-		print("Opções: 1) Cadastrar, 2) Listar, 3) Desmarcar")
+		print("Opções: 1) Cadastrar, 2) Listar, 3) Desmarcar ,4) Registrar Materiais Utilizados")
 		tipo_procedimento = int(input("Digite o a operação desejada: "))
 		if tipo_procedimento == 1:
 			cadastrar_procedimento(conexao)
@@ -39,6 +40,8 @@ while True:
 			listar_dados(conexao, "Procedimento")
 		elif tipo_procedimento == 3:
 			desmarcar_procedimento(conexao)
+		elif tipo_procedimento == 4:
+			MateriaisEquipamentosProcedimento(conexao)
 		else:
 			print("Opção inválida!")
 	elif opcao == 3:
@@ -54,7 +57,18 @@ while True:
 			atualizar_nome_de_materiais(conexao)
 		else:
 			print("Opção inválida!")
+	elif opcao == 4:
 		
+		print("Opções: 1) Cadastrar, 2) Listar")
+		tipo_procedimento = int(input("Digite o a operação desejada: "))
+		if tipo_procedimento == 1:
+			faturamento(conexao)
+		elif tipo_procedimento == 2:
+			listar_dados(conexao, "Faturamento")
+		else:
+			print("Opção inválida!")
+
+	
 	else:
 		print("Opção inválida!")
 
