@@ -9,7 +9,7 @@ O sistema de gestão hospitalar possui as seguintes funcionalidades principais:
 - Cadastro e gerenciamento de pacientes, com informações pessoais, histórico médico e agendamento de consultas.
 - Cadastro e gerenciamento de médicos, incluindo suas especialidades e horários de disponibilidade.
 - Agendamento de consultas, considerando a disponibilidade dos médicos e dos pacientes.
-- Registro e acesso a históricos médicos de pacientes, contendo informações sobre consultas, diagnósticos e tratamentos.
+- Registro e acesso a históricos médicos de pacientes, contendo informações sobre consultas, diagnósticos de cirurgia plastica.
 - Geração de relatórios estatísticos sobre o fluxo de pacientes, número de consultas realizadas, entre outros.
 
 ## Tecnologias utilizadas
@@ -19,7 +19,7 @@ O projeto é desenvolvido utilizando as seguintes tecnologias:
 - Flask: Framework web utilizado para criar o backend do sistema e fornecer APIs para interação com o frontend.
 - SQL: Linguagem de consulta utilizada para manipulação e gerenciamento do banco de dados.
 - MySQL: Sistema de gerenciamento de banco de dados relacional utilizado para armazenar as informações do sistema.
-
+  
 ## Instalação e Execução
 Siga as etapas abaixo para executar o projeto em sua máquina local:
 
