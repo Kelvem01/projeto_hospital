@@ -59,6 +59,36 @@ def listar_dados(conn, tabela):
 	for dado in dados:
 		print(dado)
 
+def exemplo_joins(conn):
+	print("------------ Dados Recuperados ------------")
+	cursor = conn.cursor()
+	#comando = f"""
+	#	SELECT Faturamento.id, Cliente.id, Cliente.nome
+	#	FROM Faturamento
+	#	INNER JOIN Cliente ON Faturamento.id = Cliente.id;
+	#"""
+
+	#comando = f"""
+	#	SELECT Faturamento.id, Procedimento.id, Procedimento.tipo
+	#	FROM Faturamento
+	#	INNER JOIN Procedimento ON Faturamento.id = Procedimento.id;
+	#"""
+
+	comando = f"""
+		SELECT Faturamento.cliente_id, Faturamento.procedimento_id, Cliente.id, Cliente.nome, Procedimento.id, Procedimento.tipo
+		FROM Faturamento
+		INNER JOIN Cliente
+			ON Faturamento.cliente_id = Cliente.id
+		INNER JOIN Procedimento
+			ON Faturamento.procedimento_id = Procedimento.id;
+	"""
+
+	cursor.execute(comando)
+	dados = cursor.fetchall()
+	for dado in dados:
+		#print(dado) #Mostra a tupla recuperada do BD
+		print(f"""Cliente: {dado[3]} | Procedimento: {dado[5]}""")
+
 def cadastrar_procedimento(conn):
 	cursor = conn.cursor()
 	comando = f"""INSERT INTO Procedimento (tipo, cliente_id, cirurgiao_id, anestesista_id, sala, status) VALUES (?,?,?,?,?,?)"""	
