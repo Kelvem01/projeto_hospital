@@ -89,6 +89,15 @@ def exemplo_joins(conn):
 		#print(dado) #Mostra a tupla recuperada do BD
 		print(f"""Cliente: {dado[3]} | Procedimento: {dado[5]}""")
 
+def contabiliza_pagamento(conn):
+	print("------------ Dados Recuperados ------------")
+	cursor = conn.cursor()
+	comando = """SELECT * FROM MateriaisEquipamentos"""
+	cursor.execute(comando)
+	dados = cursor.fetchall()
+	for dado in dados:
+		print(dado)
+
 def cadastrar_procedimento(conn):
 	cursor = conn.cursor()
 	comando = f"""INSERT INTO Procedimento (tipo, cliente_id, cirurgiao_id, anestesista_id, sala, status) VALUES (?,?,?,?,?,?)"""	
@@ -143,6 +152,15 @@ def  atualizar_materias_equipamentos(conn):
 	cursor.execute(comando)
 	conn.commit()
 
+def retirada_de_materias_equipamentos(conn, id, quantidade):
+	cursor = conn.cursor()
+	listar_dados(conn, "MateriaisEquipamentos")
+	comando = f"""UPDATE MateriaisEquipamentos SET quantidade = quantidade - {quantidade} WHERE id = {id}"""
+	print('Cadastrado de nova quantidade realizado com sucesso!  ')
+	
+	cursor.execute(comando)
+	conn.commit()
+
 def atualizar_nome_de_materiais(conn): # feito uma nova função para atualizar nomes de materiais
     cursor = conn.cursor()
     listar_dados(conn, "MateriaisEquipamentos")
@@ -174,8 +192,13 @@ def MateriaisEquipamentosProcedimento(conn):
 	MateriaisEquipamentos_id = int(input("Selecione o ID do Material "))
 	listar_dados(conn, "Procedimento")
 	Procedimento_id = int(input("Selecione o ID do Procedimento: "))
-	comando = f"""INSERT INTO MateriaisEquipamentosProcedimento (MateriaisEquipamentos_id, Procedimento_id) VALUES (?,?)"""
-	valores = [MateriaisEquipamentos_id, Procedimento_id]
-
+	qtd_utilizada = int(input("Selecione a quantidade utilizada deste material: "))
+	
+	#Atualiza no estoque a quantidade de materiais retirada (já usada)
+	#Futuro: validar se existe a quantidade utilizada no estoque
+	retirada_de_materias_equipamentos(conn, MateriaisEquipamentos_id, qtd_utilizada)
+	
+	comando = f"""INSERT INTO MateriaisEquipamentosProcedimento (MateriaisEquipamentos_id, Procedimento_id, qtd_utilizada) VALUES (?,?,?)"""
+	valores = [MateriaisEquipamentos_id, Procedimento_id, qtd_utilizada]
 	cursor.execute(comando,valores)
 	conn.commit()

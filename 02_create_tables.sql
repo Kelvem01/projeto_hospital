@@ -60,6 +60,7 @@ CREATE TABLE MateriaisEquipamentosProcedimento (
 	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	MateriaisEquipamentos_id INT,
 	Procedimento_id INT,
+	qtd_utilizada INT,
 
 	FOREIGN KEY (MateriaisEquipamentos_id) REFERENCES MateriaisEquipamentos(id),
 	FOREIGN KEY (Procedimento_id) REFERENCES Procedimento(id)
