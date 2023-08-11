@@ -89,6 +89,41 @@ def exemplo_joins(conn):
 		#print(dado) #Mostra a tupla recuperada do BD
 		print(f"""Cliente: {dado[3]} | Procedimento: {dado[5]}""")
 
+def exemplo_joins2(conn):
+	print("------------ Dados Recuperados ------------")
+	cursor = conn.cursor()
+
+	#comando = f"""
+	#	SELECT MateriaisEquipamentosProcedimento.MateriaisEquipamentos_id, MateriaisEquipamentosProcedimento.Procedimento_id, MateriaisEquipamentosProcedimento.qtd_utilizada, Procedimento.id, Procedimento.tipo, MateriaisEquipamentos.id, MateriaisEquipamentos.tipo
+	#	FROM MateriaisEquipamentosProcedimento
+	#	INNER JOIN Procedimento
+	#		ON MateriaisEquipamentosProcedimento.Procedimento_id = Procedimento.id;
+	#	"""
+
+	comando = f"""
+		SELECT
+			MateriaisEquipamentosProcedimento.MateriaisEquipamentos_id,
+			MateriaisEquipamentos.id,
+			MateriaisEquipamentos.tipo,
+			MateriaisEquipamentosProcedimento.qtd_utilizada,
+			MateriaisEquipamentos.valor,
+			MateriaisEquipamentosProcedimento.Procedimento_id,
+			Procedimento.id,
+			Procedimento.tipo,
+			Procedimento.cliente_id
+
+		FROM MateriaisEquipamentosProcedimento
+		INNER JOIN MateriaisEquipamentos
+			ON MateriaisEquipamentosProcedimento.MateriaisEquipamentos_id = MateriaisEquipamentos.id
+		INNER JOIN Procedimento
+			ON MateriaisEquipamentosProcedimento.Procedimento_id = Procedimento.id;
+	"""
+
+	cursor.execute(comando)
+	dados = cursor.fetchall()
+	for dado in dados:
+		print(dado) #Mostra a tupla recuperada do BD
+
 def contabiliza_pagamento(conn):
 	print("------------ Dados Recuperados ------------")
 	cursor = conn.cursor()

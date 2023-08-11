@@ -71,7 +71,8 @@ while True:
 	elif opcao == 5:
 		contabiliza_pagamento(conexao)
 	elif opcao == 6:
-		exemplo_joins(conexao)
+		#exemplo_joins(conexao)
+		exemplo_joins2(conexao)
 	else:
 		print("Opção inválida!")
 
