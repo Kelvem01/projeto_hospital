@@ -1,26 +1,25 @@
 import hashlib
-
 # realizar criptografia de senha teste**
 def cadastrar_usuario(conn):
-    cursor = conn.cursor()
-    comando = f"""INSERT INTO Usuario (nivel, nome, email, senha) VALUES (?,?,?,?)"""
-    nivel = input("Digite o nível de acesso: ")  # 1) básico, 2) parcial, 3) completo
-    nome = input("Digite o seu nome: ")
-    email = input("Digite o seu email: ")
+	cursor = conn.cursor()
+	comando = f"""INSERT INTO Usuario (nivel, nome, email, senha) VALUES (?,?,?,?)"""
+	nivel = input("Digite o nível de acesso: ")  # 1) básico, 2) parcial, 3) completo
+	nome = input("Digite o seu nome: ")
+	email = input("Digite o seu email: ")
 
-    while True:
-        senha = input("Digite a sua senha: ")
-        con_senha = input('Confirme sua senha: ')
-        if con_senha == senha:
-            senha_hash = hashlib.sha256(senha.encode()).hexdigest()  # Criptografa a senha usando SHA256
-            print('Cadastro realizado com sucesso!')
-            break
-        else:
-            print('Senha inválida!')
+	while True:
+		senha = input("Digite a sua senha: ")
+		con_senha = input('Confirme sua senha: ')
+		if con_senha == senha:
+			senha_hash = hashlib.sha256(senha.encode()).hexdigest()  # Criptografa a senha usando SHA256
+			print('Cadastro realizado com sucesso!')
+			break
+		else:
+			print('Senha inválida!')
 
-    values = [nivel, nome, email, senha_hash]
-    cursor.execute(comando, values)
-    conn.commit()
+	values = [nivel, nome, email, senha_hash]
+	cursor.execute(comando, values)
+	conn.commit()
 
 def cadastrar_cliente(conn):
 	cursor = conn.cursor()
