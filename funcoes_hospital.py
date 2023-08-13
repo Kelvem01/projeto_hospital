@@ -124,7 +124,13 @@ def exemplo_joins2(conn):
 	cursor.execute(comando)
 	dados = cursor.fetchall()
 	for dado in dados:
-		print(dado) #Mostra a tupla recuperada do BD
+		print(f""" Id Cliente {dado[7]}
+        Id material:{dado[0]} Material: {[1]}
+        Quantidade Utilizada: {dado[2]}
+		Valor :{dado[3]}
+		Id procedimento:{dado[5]} Procedimneto: {dado[6]}
+
+    """) #Mostra a tupla recuperada do BD
 
 def contabiliza_pagamento(conn):
 	print("------------ Dados Recuperados ------------")
