@@ -85,7 +85,7 @@ def exemplo_joins(conn):
 
 	cursor.execute(comando)
 	dados = cursor.fetchall()
-	for dado in dados:
+	for dado in dados: # recuperando os dados em foma de nota 
 		#print(dado) #Mostra a tupla recuperada do BD  #recuperando todas as informações 
 		print(f""" Cliente id : {dado [0]} Cliente: {dado[4]}
 		Id Procedimento:{dado[5]}:Procedimento:{dado[6]}  
