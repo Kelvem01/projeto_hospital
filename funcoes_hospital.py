@@ -74,7 +74,8 @@ def exemplo_joins(conn):
 	#"""
 
 	comando = f"""
-		SELECT Faturamento.cliente_id, Faturamento.procedimento_id, Cliente.id, Cliente.nome, Procedimento.id, Procedimento.tipo
+		SELECT Faturamento.cliente_id, Faturamento.procedimento_id, Faturamento.valorAnestesista,
+		Cliente.id, Cliente.nome, Procedimento.id, Procedimento.tipo ,Procedimento.Status
 		FROM Faturamento
 		INNER JOIN Cliente
 			ON Faturamento.cliente_id = Cliente.id
@@ -85,9 +86,11 @@ def exemplo_joins(conn):
 	cursor.execute(comando)
 	dados = cursor.fetchall()
 	for dado in dados:
-		#print(dado) #Mostra a tupla recuperada do BD
-		print(f"""Cliente: {dado[3]} | Procedimento: {dado[5]}""")
-
+		#print(dado) #Mostra a tupla recuperada do BD  #recuperando todas as informações 
+		print(f""" Cliente id : {dado [0]} Cliente: {dado[4]}
+		Id Procedimento:{dado[5]}:Procedimento:{dado[6]}  
+		Valor Anestesista: {dado[2]} Starus Cirurgico: {dado[7]}
+		""")
 def exemplo_joins2(conn):
 	print("------------ Dados Recuperados ------------")
 	cursor = conn.cursor()
