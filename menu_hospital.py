@@ -76,7 +76,9 @@ while True:
 	elif opcao == 6:
 		#exemplo_joins(conexao)
 		#exemplo_joins2(conexao)
-		exemplo_joins3(conexao)
+		#exemplo_joins3(conexao)
+		exemplo_joins4(conexao)
+		exemplo_joins5(conexao)
 	else:
 		print("Opção inválida!")
 
