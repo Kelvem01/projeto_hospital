@@ -1,4 +1,5 @@
 import hashlib
+
 # realizar criptografia de senha teste**
 def cadastrar_usuario(conn):
 	cursor = conn.cursor()
@@ -58,80 +59,6 @@ def listar_dados(conn, tabela):
 	for dado in dados:
 		print(dado)
 
-def exemplo_joins(conn):
-	print("------------ Dados Recuperados ------------")
-	cursor = conn.cursor()
-	#comando = f"""
-	#	SELECT Faturamento.id, Cliente.id, Cliente.nome
-	#	FROM Faturamento
-	#	INNER JOIN Cliente ON Faturamento.id = Cliente.id;
-	#"""
-
-	#comando = f"""
-	#	SELECT Faturamento.id, Procedimento.id, Procedimento.tipo
-	#	FROM Faturamento
-	#	INNER JOIN Procedimento ON Faturamento.id = Procedimento.id;
-	#"""
-
-	comando = f"""
-		SELECT Faturamento.cliente_id, Faturamento.procedimento_id, Faturamento.valorAnestesista,
-		Cliente.id, Cliente.nome, Procedimento.id, Procedimento.tipo ,Procedimento.Status
-		FROM Faturamento
-		INNER JOIN Cliente
-			ON Faturamento.cliente_id = Cliente.id
-		INNER JOIN Procedimento
-			ON Faturamento.procedimento_id = Procedimento.id;
-	"""
-
-	cursor.execute(comando)
-	dados = cursor.fetchall()
-	for dado in dados: # recuperando os dados em foma de nota 
-		#print(dado) #Mostra a tupla recuperada do BD  #recuperando todas as informações 
-		print(f""" Cliente id : {dado [0]} Cliente: {dado[4]}
-		Id Procedimento:{dado[5]}:Procedimento:{dado[6]}  
-		Valor Anestesista: {dado[2]} Starus Cirurgico: {dado[7]}
-		""")
-
-def exemplo_joins2(conn):
-	print("------------ Dados Recuperados ------------")
-	cursor = conn.cursor()
-
-	#comando = f"""
-	#	SELECT MateriaisEquipamentosProcedimento.MateriaisEquipamentos_id, MateriaisEquipamentosProcedimento.Procedimento_id, MateriaisEquipamentosProcedimento.qtd_utilizada, Procedimento.id, Procedimento.tipo, MateriaisEquipamentos.id, MateriaisEquipamentos.tipo
-	#	FROM MateriaisEquipamentosProcedimento
-	#	INNER JOIN Procedimento
-	#		ON MateriaisEquipamentosProcedimento.Procedimento_id = Procedimento.id;
-	#	"""
-
-	comando = f"""
-		SELECT
-			MateriaisEquipamentosProcedimento.MateriaisEquipamentos_id,
-			MateriaisEquipamentos.id,
-			MateriaisEquipamentos.tipo,
-			MateriaisEquipamentosProcedimento.qtd_utilizada,
-			MateriaisEquipamentos.valor,
-			MateriaisEquipamentosProcedimento.Procedimento_id,
-			Procedimento.id,
-			Procedimento.tipo,
-			Procedimento.cliente_id
-
-		FROM MateriaisEquipamentosProcedimento
-		INNER JOIN MateriaisEquipamentos
-			ON MateriaisEquipamentosProcedimento.MateriaisEquipamentos_id = MateriaisEquipamentos.id
-		INNER JOIN Procedimento
-			ON MateriaisEquipamentosProcedimento.Procedimento_id = Procedimento.id;
-	"""
-
-	cursor.execute(comando)
-	dados = cursor.fetchall()
-	for dado in dados:
-		print(f""" Id Cliente: {dado[8]}
-        Id material: {dado[1]} | Material: {dado[2]}
-        Quantidade Utilizada: {dado[3]}
-		Valor: {dado[4]}
-		Id procedimento: {dado[6]} | Procedimento: {dado[7]}
-    """) #Mostra a tupla recuperada do BD
-
 def contabiliza_pagamento(conn):
 	print("------------ Dados Recuperados ------------")
 	cursor = conn.cursor()
@@ -140,80 +67,6 @@ def contabiliza_pagamento(conn):
 	dados = cursor.fetchall()
 	for dado in dados:
 		print(dado)
-
-def cadastrar_procedimento(conn):
-	cursor = conn.cursor()
-	comando = f"""INSERT INTO Procedimento (tipo, cliente_id, cirurgiao_id, anestesista_id, sala, status) VALUES (?,?,?,?,?,?)"""	
-	tipo  = input("Descreva o tipo de procedimento: ")
-
-	#Listar os clientes e seus IDs
-	listar_dados(conn, "Cliente")
-	cliente_id = int(input("Selecione o cliente: "))
-
-	#Listar os cirurgioes e seus IDs
-	listar_dados(conn, "Cirurgiao")
-	cirurgiao_id = int(input("Selecione o cirurgiao: "))
-
-	#Listar os anestesistas e seus IDs
-	listar_dados(conn, "Anestesista")
-	anestesista_id = int(input("Selecione o anestesista: "))
-
-	sala  = int(input("Digite a sala: "))
-	values = [tipo, cliente_id, cirurgiao_id, anestesista_id, sala, "Agendado"]
-	cursor.execute(comando, values)
-	conn.commit()
-
-def desmarcar_procedimento(conn):
-	cursor = conn.cursor()
-	listar_dados(conn, "Procedimento")
-	id = int(input("Selecione o ID do procedimento a ser desmarcado: "))
-	comando = f"""UPDATE Procedimento SET status = "Cancelado" WHERE id = {id};"""	
-	cursor.execute(comando)
-	conn.commit()
-	
-
-def cadastrar_materiais_equipamentos(conn):
-	cursor = conn.cursor()
-	comando = f"""INSERT INTO MateriaisEquipamentos (tipo, descricao, quantidade , valor) VALUES (?,?,?,?)"""
-	tipo = input("Digite o tipo do material: ")
-	descricao = input("Digite a descricao do material: ")
-	quantidade = int(input("Digite a quantidade : "))
-	valor = float(input('Digite o valor: '))
-	values = [tipo, descricao, quantidade , valor]
-	cursor.execute(comando, values)
-	print('Material cadastrado com sucesso!  ')
-	conn.commit()
-
-def  atualizar_materias_equipamentos(conn):
-	cursor = conn.cursor()
-	listar_dados(conn, "MateriaisEquipamentos")
-	id = int(input("Selecione o ID do material a ser atualizado: "))
-	quantidade = int(input("Digite a nova quantidade : "))
-	comando = f"""UPDATE MateriaisEquipamentos SET quantidade = {quantidade} WHERE id = {id}"""
-	print('Cadastrado de nova quantidade realizado com sucesso!  ')
-	
-	cursor.execute(comando)
-	conn.commit()
-
-def retirada_de_materias_equipamentos(conn, id, quantidade):
-	cursor = conn.cursor()
-	listar_dados(conn, "MateriaisEquipamentos")
-	comando = f"""UPDATE MateriaisEquipamentos SET quantidade = quantidade - {quantidade} WHERE id = {id}"""
-	print('Cadastrado de nova quantidade realizado com sucesso!  ')
-	
-	cursor.execute(comando)
-	conn.commit()
-
-def atualizar_nome_de_materiais(conn): # feito uma nova função para atualizar nomes de materiais
-    cursor = conn.cursor()
-    listar_dados(conn, "MateriaisEquipamentos")
-    id = int(input("Selecione o ID do material a ser atualizado: "))
-    material = input("Digite o nome do material: ")
-    comando = f"""UPDATE MateriaisEquipamentos SET tipo = '{material}' WHERE id = {id}"""
-    print (f'Atualizado com sucesso! ') # adicionado para mostrar a atualização do nome 
-
-    cursor.execute(comando)
-    conn.commit()
 
 def faturamento(conn):
 	cursor = conn.cursor()
@@ -226,22 +79,5 @@ def faturamento(conn):
 	comando = f"""INSERT INTO Faturamento (cliente_id, procedimento_id, qtdHorasSala, valorAnestesista) VALUES (?,?,?,?)"""
 	valores = [cliente_id, procedimento_id, qtdHorasSala, valorAnestesista]
 
-	cursor.execute(comando,valores)
-	conn.commit()
-
-def MateriaisEquipamentosProcedimento(conn):
-	cursor = conn.cursor()
-	listar_dados(conn, "MateriaisEquipamentos")
-	MateriaisEquipamentos_id = int(input("Selecione o ID do Material "))
-	listar_dados(conn, "Procedimento")
-	Procedimento_id = int(input("Selecione o ID do Procedimento: "))
-	qtd_utilizada = int(input("Selecione a quantidade utilizada deste material: "))
-	
-	#Atualiza no estoque a quantidade de materiais retirada (já usada)
-	#Futuro: validar se existe a quantidade utilizada no estoque
-	retirada_de_materias_equipamentos(conn, MateriaisEquipamentos_id, qtd_utilizada)
-	
-	comando = f"""INSERT INTO MateriaisEquipamentosProcedimento (MateriaisEquipamentos_id, Procedimento_id, qtd_utilizada) VALUES (?,?,?)"""
-	valores = [MateriaisEquipamentos_id, Procedimento_id, qtd_utilizada]
 	cursor.execute(comando,valores)
 	conn.commit()

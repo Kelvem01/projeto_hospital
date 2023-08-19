@@ -1,4 +1,7 @@
 from funcoes_hospital import *
+from funcoes_teste import *
+from funcoes_procedimento import *
+from funcoes_equipamentos_materiais import *
 
 import sqlite3
 conexao = sqlite3.connect("gestaoHospitalar.sqlite3")
@@ -72,7 +75,8 @@ while True:
 		contabiliza_pagamento(conexao)
 	elif opcao == 6:
 		#exemplo_joins(conexao)
-		exemplo_joins2(conexao)
+		#exemplo_joins2(conexao)
+		exemplo_joins3(conexao)
 	else:
 		print("Opção inválida!")
 
