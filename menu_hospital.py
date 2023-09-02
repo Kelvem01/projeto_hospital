@@ -16,7 +16,8 @@ while True:
 	print("3) Cadastar Materiais e Equipamentos")
 	print("4) Faturamento")
 	print("5) Contabilizar pagamento")
-	print("6) Testes do sistema (Remover após o DEBUG)")
+	print("6) Listar Usuarios")
+	print("7) Testes do sistema (Remover após o DEBUG)")
 	print("0) Sair do Sistema")
 
 	opcao = int(input("Digite a opcao desejada: "))
@@ -74,11 +75,25 @@ while True:
 	elif opcao == 5:
 		contabiliza_pagamento(conexao)
 	elif opcao == 6:
+		print("Opções: 1) Usuarios, 2) Clientes, 3) Cirurgiões, 4) Anestesistas")
+		opcao = int(input("Digite o a operação desejada: "))
+		if opcao == 1:
+			listar_dados(conexao, "Usuario")
+		elif opcao == 2:
+			listar_dados(conexao, "Cliente")
+		elif opcao == 3:
+			listar_dados(conexao, "Cirurgiao")
+		elif opcao == 4:
+			listar_dados(conexao, "Anestesista")
+		else:
+			print("Opção inválida!")
+	elif opcao == 7:
 		#exemplo_joins(conexao)
 		#exemplo_joins2(conexao)
 		#exemplo_joins3(conexao)
-		exemplo_joins4(conexao)
+		#exemplo_joins4(conexao)
 		exemplo_joins5(conexao)
+		#rodar_comandos_SQL(conexao)
 	else:
 		print("Opção inválida!")
 

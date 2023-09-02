@@ -72,6 +72,7 @@ CREATE TABLE Faturamento (
 	procedimento_id INT NOT NULL,
 	qtdHorasSala INT,
 	valorAnestesista DECIMAL,
+	status_pagamento BOOL,
 	FOREIGN KEY (cliente_id) REFERENCES Cliente(id),
 	FOREIGN KEY (procedimento_id) REFERENCES Procedimento(id)
 );

@@ -203,3 +203,15 @@ def exemplo_joins5(conn):
 		#Valor: {dado[4]}
 		#Id procedimento: {dado[6]} | Procedimento: {dado[7]}
     	#""") #Mostra a tupla recuperada do BD
+
+def rodar_comandos_SQL(conn):
+	cursor = conn.cursor()
+
+	comando = f"""
+	UPDATE Faturamento
+	SET status_pagamento = True
+	WHERE id = 3;
+	"""
+
+	cursor.execute(comando)
+	conn.commit()
