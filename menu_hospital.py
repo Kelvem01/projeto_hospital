@@ -91,8 +91,9 @@ while True:
 		#exemplo_joins(conexao)
 		#exemplo_joins2(conexao)
 		#exemplo_joins3(conexao)
-		#exemplo_joins4(conexao)
-		exemplo_joins5(conexao)
+		exemplo_joins4(conexao)
+		#exemplo_joins5(conexao)
+		#exemplo_joins6(conexao) #INCOMPLETO
 		#rodar_comandos_SQL(conexao)
 	else:
 		print("Opção inválida!")

@@ -204,14 +204,69 @@ def exemplo_joins5(conn):
 		#Id procedimento: {dado[6]} | Procedimento: {dado[7]}
     	#""") #Mostra a tupla recuperada do BD
 
+#Calcula o valor TOTAL por CLIENTE (TODOS OS PROCEDIMENTOS) | Obs.: Contabilizando pagamentos NÃO EFETUADOS apenas.
+def exemplo_joins6(conn):
+	print("------------ Dados Recuperados ------------")
+	cursor = conn.cursor()
+
+	comando = f"""
+		SELECT
+			MateriaisEquipamentosProcedimento.MateriaisEquipamentos_id,
+			MateriaisEquipamentos.id,
+			MateriaisEquipamentos.tipo,
+			MateriaisEquipamentosProcedimento.qtd_utilizada,
+			MateriaisEquipamentos.valor,
+			MateriaisEquipamentosProcedimento.Procedimento_id,
+			Procedimento.id,
+			Procedimento.tipo,
+			Procedimento.cliente_id,
+			SUM(MateriaisEquipamentosProcedimento.qtd_utilizada*MateriaisEquipamentos.valor),
+			Faturamento.cliente_id,
+			Faturamento.procedimento_id,
+			Faturamento.qtdHorasSala,
+			Faturamento.valorAnestesista,
+			Faturamento.status_pagamento
+
+		FROM MateriaisEquipamentosProcedimento
+		INNER JOIN MateriaisEquipamentos
+			ON MateriaisEquipamentosProcedimento.MateriaisEquipamentos_id = MateriaisEquipamentos.id
+		INNER JOIN Procedimento
+			ON MateriaisEquipamentosProcedimento.Procedimento_id = Procedimento.id
+		INNER JOIN Faturamento
+			ON Procedimento.cliente_id = Faturamento.cliente_id
+		GROUP BY Faturamento.cliente_id;
+	"""
+
+	cursor.execute(comando)
+	dados = cursor.fetchall()
+	for dado in dados:
+		print(dado)
+		#print(f""" Id Cliente: {dado[8]}
+        #Id material: {dado[1]} | Material: {dado[2]}
+        #Quantidade Utilizada: {dado[3]}
+		#Valor: {dado[4]}
+		#Id procedimento: {dado[6]} | Procedimento: {dado[7]}
+    	#""") #Mostra a tupla recuperada do BD
+
+
 def rodar_comandos_SQL(conn):
 	cursor = conn.cursor()
 
 	comando = f"""
-	UPDATE Faturamento
-	SET status_pagamento = True
-	WHERE id = 3;
+	UPDATE MateriaisEquipamentosProcedimento
+	SET qtd_utilizada = 7
+	WHERE id = 2;
 	"""
 
+	#comando = f"""
+	#SELECT * FROM Faturamento WHERE status_pagamento = FALSE;
+	#"""
+	
 	cursor.execute(comando)
+	
+	#Listar dados quando houver um SELECT
+	#dados = cursor.fetchall()
+	#for dado in dados:
+	#	print(dado)
+
 	conn.commit()
