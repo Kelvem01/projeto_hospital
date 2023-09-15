@@ -64,11 +64,13 @@ while True:
 		else:
 			print("Opção inválida!")
 	elif opcao == 4:
-		print("Opções: 1) Cadastrar, 2) Listar")
+		print("Opções: 1) Criar Faturamento, 2) Cadastrar Procedimento, 3) Listar")
 		tipo_procedimento = int(input("Digite o a operação desejada: "))
 		if tipo_procedimento == 1:
-			faturamento(conexao)
+			faturamento(conexao) #Cadastrar o faturamento			
 		elif tipo_procedimento == 2:
+			faturamento_procedimento(conexao) #Adiciona/relaciona o faturamento atual com os procedimentos realizados
+		elif tipo_procedimento == 3:
 			listar_dados(conexao, "Faturamento")
 		else:
 			print("Opção inválida!")

@@ -69,12 +69,18 @@ CREATE TABLE MateriaisEquipamentosProcedimento (
 CREATE TABLE Faturamento (
 	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	cliente_id INT NOT NULL,
+	status_pagamento BOOL,
+	FOREIGN KEY (cliente_id) REFERENCES Cliente(id)
+);
+
+CREATE TABLE FaturamentoProcedimento (
+	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	faturamento_id INT NOT NULL,
 	procedimento_id INT NOT NULL,
 	qtdHorasSala INT,
 	valorAnestesista DECIMAL,
-	status_pagamento BOOL,
-	FOREIGN KEY (cliente_id) REFERENCES Cliente(id),
-	FOREIGN KEY (procedimento_id) REFERENCES Procedimento(id)
+	FOREIGN KEY (faturamento_id)  REFERENCES Faturamento(id),
+	FOREIGN KEY (procedimento_id)  REFERENCES Procedimento(id)
 );
 
 #EXTRA Tabela Procedimentos

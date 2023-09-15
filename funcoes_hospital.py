@@ -72,13 +72,21 @@ def faturamento(conn):
 	cursor = conn.cursor()
 	listar_dados(conn, "Cliente")
 	cliente_id = int(input("Selecione o ID do Cliente: "))
+	status_pagamento = False #Inicializa como "Não pago"
+	comando = f"""INSERT INTO Faturamento (cliente_id, status_pagamento) VALUES (?,?)"""
+	valores = [cliente_id, status_pagamento]
+	cursor.execute(comando,valores)
+	conn.commit()
+
+def faturamento_procedimento(conn):
+	cursor = conn.cursor()
+	listar_dados(conn, "Faturamento")
+	faturamento_id = int(input("Selecione o ID do Faturamento: "))
 	listar_dados(conn, "Procedimento")
 	procedimento_id = int(input("Selecione o ID do Procedimento: "))
 	qtdHorasSala = int(input("Selecione o tempo cirurgico(em minutos): "))
 	valorAnestesista = float (input('Digite o valor da anestesia: '))
-	status_pagamento = False #Inicializa como "Não pago"
-	comando = f"""INSERT INTO Faturamento (cliente_id, procedimento_id, qtdHorasSala, valorAnestesista, status_pagamento) VALUES (?,?,?,?,?)"""
-	valores = [cliente_id, procedimento_id, qtdHorasSala, valorAnestesista, status_pagamento]
-
+	comando = f"""INSERT INTO FaturamentoProcedimento (faturamento_id, procedimento_id, qtdHorasSala, valorAnestesista) VALUES (?,?,?,?)"""
+	valores = [faturamento_id, procedimento_id, qtdHorasSala, valorAnestesista]
 	cursor.execute(comando,valores)
 	conn.commit()
