@@ -27,7 +27,7 @@ def retirada_de_materias_equipamentos(conn, id, quantidade):
 	cursor = conn.cursor()
 	listar_dados(conn, "MateriaisEquipamentos")
 	comando = f"""UPDATE MateriaisEquipamentos SET quantidade = quantidade - {quantidade} WHERE id = {id}"""
-	print('Cadastrado de nova quantidade realizado com sucesso!  ')
+	print('Cadastro de nova quantidade realizado com sucesso!  ')
 	
 	cursor.execute(comando)
 	conn.commit()
@@ -38,7 +38,7 @@ def atualizar_nome_de_materiais(conn): # feito uma nova função para atualizar 
     id = int(input("Selecione o ID do material a ser atualizado: "))
     material = input("Digite o nome do material: ")
     comando = f"""UPDATE MateriaisEquipamentos SET tipo = '{material}' WHERE id = {id}"""
-    print (f'Atualizado com sucesso! ') # adicionado para mostrar a atualização do nome 
+    print (' Atualizado com sucesso! ') # adicionado para mostrar a atualização do nome 
 
     cursor.execute(comando)
     conn.commit()

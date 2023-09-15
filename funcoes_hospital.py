@@ -57,7 +57,14 @@ def listar_dados(conn, tabela):
 	cursor.execute(comando)
 	dados = cursor.fetchall()
 	for dado in dados:
-		print(dado)
+			print(f"""
+        #############################################################################
+        | ID:{dado[0]}                                                              
+        | Material:{dado[1]} |Descrição do material:{dado[2]} 
+        | Quantidade:{dado[3]}                                                
+        | Valor:{dado[4]}                                                           
+        #############################################################################
+        """)
 
 def contabiliza_pagamento(conn):
 	print("------------ Dados Recuperados ------------")
@@ -66,7 +73,14 @@ def contabiliza_pagamento(conn):
 	cursor.execute(comando)
 	dados = cursor.fetchall()
 	for dado in dados:
-		print(dado)
+		print(f"""
+        #############################################################################
+        | ID:{dado[0]}                                                              
+        | Material:{dado[1]}             || Descrição do material:{dado[2]} 
+        | Quantidade:{dado[3]}                                                
+        | Valor:{dado[4]}                                                           
+        #############################################################################
+        """)
 
 def faturamento(conn):
 	cursor = conn.cursor()

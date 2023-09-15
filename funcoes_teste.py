@@ -148,10 +148,17 @@ def exemplo_joins4(conn):
 		GROUP BY Procedimento.id;
 	"""
 
-	cursor.execute(comando)
+	cursor.execute(comando)  ## Realizar uma nova Checagem no sql para realizar a contabilidade do procedimento com os materiais,
 	dados = cursor.fetchall()
 	for dado in dados:
-		print(dado)
+    		print(f"""
+            ID:{dado[0]} |Tipo Material:{dado[2]}
+            Quantidade Utilizada:{dado[3]}
+            Valor Mateial : R$ {dado[4]}
+            ID Procedimento:{dado[6]}| Procedimento :{dado[7]} | ID Clinte :{dado[8]} 
+            Total:R$ {dado[9]}
+            """)
+		#print(dado)
 		#print(f""" Id Cliente: {dado[8]}
         #Id material: {dado[1]} | Material: {dado[2]}
         #Quantidade Utilizada: {dado[3]}
