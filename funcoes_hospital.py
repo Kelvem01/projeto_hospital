@@ -57,14 +57,7 @@ def listar_dados(conn, tabela):
 	cursor.execute(comando)
 	dados = cursor.fetchall()
 	for dado in dados:
-			print(f"""
-        #############################################################################
-        | ID:{dado[0]}                                                              
-        | Material:{dado[1]} |Descrição do material:{dado[2]} 
-        | Quantidade:{dado[3]}                                                
-        | Valor:{dado[4]}                                                           
-        #############################################################################
-        """)
+			print(dado)
 
 def contabiliza_pagamento(conn):
 	print("------------ Dados Recuperados ------------")
@@ -104,3 +97,42 @@ def faturamento_procedimento(conn):
 	valores = [faturamento_id, procedimento_id, qtdHorasSala, valorAnestesista]
 	cursor.execute(comando,valores)
 	conn.commit()
+
+def contabiliza_faturamento(conn):
+	cursor = conn.cursor()
+	listar_dados(conn, "Faturamento")
+	faturamento_id = int(input("Digite o id do Faturamento: "))
+
+	comando = f"""
+		SELECT
+			Faturamento.id,
+			Faturamento.cliente_id,
+			FaturamentoProcedimento.faturamento_id,
+			FaturamentoProcedimento.procedimento_id,
+			FaturamentoProcedimento.qtdHorasSala,
+			FaturamentoProcedimento.valorAnestesista
+		FROM Faturamento
+		INNER JOIN FaturamentoProcedimento
+			ON Faturamento.id = FaturamentoProcedimento.faturamento_id
+		WHERE Faturamento.id = {faturamento_id}
+	"""
+	cursor.execute(comando)
+	dados_fatur_proced = cursor.fetchall()
+	
+	valor_sala = 0.0
+	valor_hora = 18.75
+	valor_anestesista = 0.0
+	for dado in dados_fatur_proced:
+		print(dado)
+		hora_minutos = dado[4]
+		valor_sala += (hora_minutos/60) * valor_hora
+		valor_atual_anestesista = dado[5]
+		valor_anestesista += valor_atual_anestesista
+	print(f"Valor SALA a ser cobrado (TOTAL): R${valor_sala:.2f}")
+	print(f"Valor ANESTESISTA a ser cobrado (TOTAL): R${valor_anestesista:.2f}")
+	
+	faturamento_total = valor_sala + valor_anestesista
+	print(f"Faturamento (TOTAL): R${faturamento_total:.2f}")
+	#Faltou somarmos o total de materiais
+	#Faltou atualizarmos o faturamento como PAGO (True)
+	#Podemos melhorar esta implementação usando SQL Puro

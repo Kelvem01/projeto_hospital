@@ -188,9 +188,6 @@ def exemplo_joins4(conn):
 	for dado in dados:
 		print(dado)
      
-     
-     
-     
     ###############################################################################################################
 #Calcula o valor TOTAL por CLIENTE (TODOS OS PROCEDIMENTOS) | Obs.: É necessário melhorar a consulta para evitar pagamentos DUPLICADOS,
 # mantendo apenas a contabilização de pagamentos NÃO EFETUADOS.
@@ -236,7 +233,7 @@ def exemplo_joins5(conn):
 		#Valor: {dado[4]}
 		#Id procedimento: {dado[6]} | Procedimento: {dado[7]}
     	#""") #Mostra a tupla recuperada do BD
-
+	
 #Calcula o valor TOTAL por CLIENTE (TODOS OS PROCEDIMENTOS) | Obs.: Contabilizando pagamentos NÃO EFETUADOS apenas.
 def exemplo_joins6(conn):
 	print("------------ Dados Recuperados ------------")
