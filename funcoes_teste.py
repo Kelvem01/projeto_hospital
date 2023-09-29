@@ -300,3 +300,41 @@ def rodar_comandos_SQL(conn):
 	#	print(dado)
 
 	conn.commit()
+
+
+
+
+#Calcula o valor TOTAL por PROCEDIMENTO
+def exemplo_joins7(conn):
+	print("------------ Dados Recuperados ------------")
+	cursor = conn.cursor()
+
+	comando = f"""
+		SELECT MateriaisEquipamentosProcedimento.MateriaisEquipamentos_id, MateriaisEquipamentosProcedimento.Procedimento_id, MateriaisEquipamentosProcedimento.qtd_utilizada, Procedimento.id, Procedimento.tipo, MateriaisEquipamentos.id, MateriaisEquipamentos.tipo
+		FROM MateriaisEquipamentosProcedimento
+		INNER JOIN Procedimento
+			ON MateriaisEquipamentosProcedimento.Procedimento_id = Procedimento.id;
+		"""
+
+	comando = f"""
+		SELECT
+			MateriaisEquipamentosProcedimento.MateriaisEquipamentos_id,
+			MateriaisEquipamentosProcedimento.qtd_utilizada,
+			MateriaisEquipamentos.valor,
+			MateriaisEquipamentosProcedimento.Procedimento_id,
+			Procedimento.id,
+			Procedimento.tipo,
+			Procedimento.cliente_id
+    
+		FROM MateriaisEquipamentosProcedimento
+		INNER JOIN MateriaisEquipamentos
+			ON MateriaisEquipamentosProcedimento.MateriaisEquipamentos_id = MateriaisEquipamentos.id
+		INNER JOIN Procedimento
+			ON MateriaisEquipamentosProcedimento.Procedimento_id = Procedimento.id
+		WHERE Procedimento.cliente_id = {1}
+	"""
+	
+	cursor.execute(comando)  ## Realizar uma nova Checagem no sql para realizar a contabilidade do procedimento com os materiais,
+	dados = cursor.fetchall()
+	for dado in dados:
+		print(dado)

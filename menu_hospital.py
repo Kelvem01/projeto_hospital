@@ -94,11 +94,12 @@ while True:
 		#exemplo_joins2(conexao)
 		#exemplo_joins3(conexao)
 		#exemplo_joins4(conexao) #VERIFICAR NA PRÓXIMA MONITORIA
+		exemplo_joins7(conexao) #VERIFICAR NA PRÓXIMA MONITORIA
 		#exemplo_joins5(conexao)
 		#exemplo_joins6(conexao) #INCOMPLETO
 		#rodar_comandos_SQL(conexao)
 
-		contabiliza_faturamento(conexao)
+		#contabiliza_faturamento(conexao)
 	else:
 		print("Opção inválida!")
 

@@ -136,3 +136,4 @@ def contabiliza_faturamento(conn):
 	#Faltou somarmos o total de materiais
 	#Faltou atualizarmos o faturamento como PAGO (True)
 	#Podemos melhorar esta implementação usando SQL Puro
+
