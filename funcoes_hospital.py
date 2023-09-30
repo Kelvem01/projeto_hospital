@@ -98,6 +98,7 @@ def faturamento_procedimento(conn):
 	cursor.execute(comando,valores)
 	conn.commit()
 
+#Calcula o valor total de um FATURAMENTO, dado o seu ID, somando os custos de SALA, ANESTESISTA e MATERIAIS.
 def contabiliza_faturamento(conn):
 	cursor = conn.cursor()
 	listar_dados(conn, "Faturamento")
@@ -122,18 +123,54 @@ def contabiliza_faturamento(conn):
 	valor_sala = 0.0
 	valor_hora = 18.75
 	valor_anestesista = 0.0
+	valor_procedimentos = 0.0
 	for dado in dados_fatur_proced:
 		print(dado)
 		hora_minutos = dado[4]
 		valor_sala += (hora_minutos/60) * valor_hora
 		valor_atual_anestesista = dado[5]
 		valor_anestesista += valor_atual_anestesista
+		procedimento_id = dado[3]
+		valor_procedimentos += contabiliza_procedimento(conn, procedimento_id) 
 	print(f"Valor SALA a ser cobrado (TOTAL): R${valor_sala:.2f}")
 	print(f"Valor ANESTESISTA a ser cobrado (TOTAL): R${valor_anestesista:.2f}")
+	print(f"Valor PROCEDIMENTOS a ser cobrado (TOTAL): R${valor_procedimentos:.2f}")
 	
-	faturamento_total = valor_sala + valor_anestesista
+	faturamento_total = valor_sala + valor_anestesista + valor_procedimentos
 	print(f"Faturamento (TOTAL): R${faturamento_total:.2f}")
-	#Faltou somarmos o total de materiais
 	#Faltou atualizarmos o faturamento como PAGO (True)
 	#Podemos melhorar esta implementação usando SQL Puro
 
+#Calcula o valor TOTAL de um PROCEDIMENTO, dado o seu ID
+def contabiliza_procedimento(conn, procedimento_id):
+	print("------------ Dados Recuperados ------------")
+	cursor = conn.cursor()
+
+	comando = f"""
+		SELECT
+			Procedimento.id,
+			Procedimento.tipo,
+			Procedimento.cliente_id,
+			MateriaisEquipamentosProcedimento.Procedimento_id,
+			MateriaisEquipamentosProcedimento.MateriaisEquipamentos_id,
+			MateriaisEquipamentosProcedimento.qtd_utilizada,
+			MateriaisEquipamentos.valor
+    
+		FROM MateriaisEquipamentosProcedimento
+		INNER JOIN MateriaisEquipamentos
+			ON MateriaisEquipamentosProcedimento.MateriaisEquipamentos_id = MateriaisEquipamentos.id
+		INNER JOIN Procedimento
+			ON MateriaisEquipamentosProcedimento.Procedimento_id = Procedimento.id
+		WHERE Procedimento.id = {procedimento_id}
+		ORDER BY Procedimento.id
+	"""
+	
+	cursor.execute(comando)
+	dados = cursor.fetchall()
+	total_materiais = 0.0
+	for dado in dados:
+		print(dado)
+		quantidade = dado[5]
+		valor = dado[6]
+		total_materiais += quantidade * valor
+	return total_materiais
