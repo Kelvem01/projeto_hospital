@@ -2,11 +2,10 @@ from funcoes_hospital import *
 from funcoes_teste import *
 from funcoes_procedimento import *
 from funcoes_equipamentos_materiais import *
+from funcoes_faturamento import *
 
 import sqlite3
 conexao = sqlite3.connect("gestaoHospitalar.sqlite3")
-
-#Oi do Sherlon
 
 while True:
 	print("---- Gestão Hospitalar ----")
@@ -75,7 +74,7 @@ while True:
 		else:
 			print("Opção inválida!")
 	elif opcao == 5:
-		contabiliza_pagamento(conexao)
+		contabiliza_faturamento(conexao)
 	elif opcao == 6:
 		print("Opções: 1) Usuarios, 2) Clientes, 3) Cirurgiões, 4) Anestesistas")
 		opcao = int(input("Digite o a operação desejada: "))
@@ -97,10 +96,7 @@ while True:
 		#exemplo_joins5(conexao)
 		#exemplo_joins6(conexao) #INCOMPLETO
 		#rodar_comandos_SQL(conexao)
-
-		#VERIFICAR NA PRÓXIMA MONITORIA
-		#contabiliza_procedimento(conexao, procedimento_id=1) 
-		contabiliza_faturamento(conexao)
+		pass
 	else:
 		print("Opção inválida!")
 
