@@ -42,7 +42,7 @@ while True:
 		if tipo_procedimento == 1:
 			cadastrar_procedimento(conexao)
 		elif tipo_procedimento == 2:
-			listar_dados(conexao, "Procedimento")
+			listar_dados_procedimento(conexao, "Procedimento")
 		elif tipo_procedimento == 3:
 			desmarcar_procedimento(conexao)
 		elif tipo_procedimento == 4:
@@ -55,7 +55,7 @@ while True:
 		if tipo_procedimento == 1:
 			cadastrar_materiais_equipamentos(conexao)
 		elif tipo_procedimento == 2:
-			listar_dados(conexao, "MateriaisEquipamentos")
+			listar_dados_materiais(conexao, "MateriaisEquipamentos")
 		elif tipo_procedimento == 3:
 			atualizar_materias_equipamentos(conexao)
 		elif tipo_procedimento == 4:
@@ -70,7 +70,7 @@ while True:
 		elif tipo_procedimento == 2:
 			faturamento_procedimento(conexao) #Adiciona/relaciona o faturamento atual com os procedimentos realizados
 		elif tipo_procedimento == 3:
-			listar_dados(conexao, "Faturamento")
+			listar_dados_Faturamento(conexao, "Faturamento")
 		else:
 			print("Opção inválida!")
 	elif opcao == 5:
@@ -83,9 +83,9 @@ while True:
 		elif opcao == 2:
 			listar_dados(conexao, "Cliente")
 		elif opcao == 3:
-			listar_dados(conexao, "Cirurgiao")
+			listar_dados_cirurgiao(conexao, "Cirurgiao")
 		elif opcao == 4:
-			listar_dados(conexao, "Anestesista")
+			listar_dados_Anestesista(conexao, "Anestesista")
 		else:
 			print("Opção inválida!")
 	elif opcao == 7:

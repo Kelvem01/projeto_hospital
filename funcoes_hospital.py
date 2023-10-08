@@ -57,4 +57,90 @@ def listar_dados(conn, tabela):
 	cursor.execute(comando)
 	dados = cursor.fetchall()
 	for dado in dados:
-			print(dado)
+			print(f'Id:{dado[0]}\n Nome:{dado[2]}\n E-mail:{dado[3]} ')
+   
+def listar_dados_cirurgiao(conn, tabela):
+	print("------------ Dados Recuperados ------------")
+	cursor = conn.cursor()
+	comando = f"""SELECT * FROM Cirurgiao"""
+	cursor.execute(comando)
+	dados = cursor.fetchall()
+	for dado in dados:
+    		print(f"""
+            Cirurgião
+            Id:{dado[0]}\n Nome:{dado[1]}\n Cpf:{dado[2]}\n CRM:{dado[3]}\n E-mail:{dado[4]}\n Telefone:{dado[5]}
+            """)
+
+def listar_dados_Anestesista(conn, tabela):
+	print("------------ Dados Recuperados ------------")
+	cursor = conn.cursor()
+	comando = f"""SELECT * FROM Anestesista"""
+	cursor.execute(comando)
+	dados = cursor.fetchall()
+	for dado in dados:
+    		print(f"""
+            Anestesista
+            Id:{dado[0]}\n Nome:{dado[1]}\n CPF:{dado[2]}\n CRM:{dado[3]}\n E-mail:{dado[4]}\n Telefone:{dado[5]}
+            """)
+      
+def listar_dados_procedimento(conn, tabela):
+	print("------------ Dados Recuperados ------------")
+	cursor = conn.cursor()
+	comando = f"""
+		SELECT 
+		Cliente.id,
+		Cliente.nome,
+		Procedimento.id,
+		Procedimento.tipo,
+		Procedimento.cliente_id,
+		Procedimento.status,
+		Anestesista.id,
+		Anestesista.nome,
+		Anestesista.crm,
+		Cirurgiao.id,
+		Cirurgiao.nome,
+		Cirurgiao.crm
+	FROM Cliente
+	INNER JOIN Procedimento
+		ON Cliente.id = Procedimento.cliente_id
+	INNER JOIN Anestesista
+		ON Procedimento.anestesista_id = Anestesista.id
+	INNER JOIN Cirurgiao
+		ON Procedimento.Cirurgiao_id = Cirurgiao.id;
+   		"""
+	cursor.execute(comando)
+	dados = cursor.fetchall()
+	for dado in dados:
+			print(f"""
+         Status Cirurgico
+         
+         Id Paciente:{dado[0]}\n Nome:{dado[1]}\n Procedimento Cirurgico: {dado[3]}\n 
+         Nome Anestesista:{dado[7]}  CRM:{dado[8]}
+         Nome Cirurgiao: {dado[10]}	CRM:{dado[11]}
+         Status Cirurgico:{dado[5]}
+        """)
+
+def listar_dados_materiais(conn, tabela):
+	print("------------ Dados Recuperados ------------")
+	cursor = conn.cursor()
+	comando = f"""SELECT * FROM MateriaisEquipamentos"""
+	cursor.execute(comando)
+	dados = cursor.fetchall()
+	for dado in dados:
+			print(f"""
+         Tabela Material
+         Id:{dado[0]}
+         Nome material:{dado[1]}
+         Descrição do material:{dado[2]}
+         Quantidade:{dado[3]}
+         Valor:{dado[4]}
+         """)
+   
+def listar_dados_Faturamento(conn, tabela):
+	print("------------ Dados Recuperados ------------")
+	cursor = conn.cursor()
+	comando = f"""SELECT * FROM Faturamento"""
+	cursor.execute(comando)
+	dados = cursor.fetchall()
+	for dado in dados:
+			print(f'{dado}')
