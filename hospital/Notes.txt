@@ -1,0 +1,103 @@
+-------------------------------------
+---------- Projeto: Hospital --------
+-------------------------------------
+
+
+--------------------------------------
+Configuração inicial:
+--------------------------------------
+    Criar ambiente Virtual:
+        Criar um ambiente virtual
+        python -m venv ./ambiente_virtual
+
+        Habilitar ambiente virtual:
+            ambiente_virtual/Scripts/Activate
+
+        Desabilitar Ambiente Virtual:
+            deactivate
+    
+    -Instalar Django:
+        pip install django
+    
+    -Atualizar pip:
+        python.exe -m pip install --upgrade pip
+
+
+
+--------------------------------------
+Configuração do projeto Django:
+--------------------------------------
+
+Parte 1:
+Criar o projeto com o django:
+    django-admin startproject hospital
+Acessar a pasta criada:
+    cd hospital/
+
+Parte 2:
+Criar um App Django: Django organiza a funcionalidade em apps.
+Para criar um novo app, execute o seguinte comando a partir do diretório raiz do projeto (onde está localizado o arquivo manage.py):
+    python manage.py startapp core
+Isso irá criar um novo diretório chamado "core" com a estrutura inicial do app.
+
+Parte 3:
+Adicionar o app 'core' criado na variável "INSTALLED_APPS" dentro do arquivo agenda/settings.py
+
+Parte 4:
+Rodar o comando:
+    python manage.py migrate
+Criar um usuário para a rota 'admin/'
+    python manage.py createsuperuser --username admin
+    Usuário: admin
+    Senha: Kelvem@2023
+Acessar a página e logar:
+    http://127.0.0.1:8000/admin
+
+
+------------------ CONTINUAR DAQUI ------------------
+
+
+
+Parte 5:
+Criar e configurar as tabelas do banco de dados usando o arquivo core/models.py
+Adicionar as classes que representarão as tabelas do banco de dados.
+Por exemplo:
+    class Evento(models.Model):
+        titulo = models.CharField(max_length=100)
+        descricao = models.TextField(blank=True, null=True)
+        data_evento = models.DateTimeField()
+        data_criacao = models.DateTimeField(auto_now=True) #Insere a hora atual neste campo
+Transformar as classes criadas em models.py em tabelas do banco de dados:
+    python manage.py makemigrations core   #Cria o arquivo na pasta '/migrations'.
+    python manage.py sqlmigrate core 0001  #Verifica o SQL a ser gerado
+    python manage.py migrate core 0001     #Realiza a migração do Banco de Dados
+
+    OBS.: Sempre que alterar o banco de dados via models.py, é preciso aplicar os comandos acima para que seja de fato aplicadas as modificações.
+
+Parte 6:
+Registrar o Model criado no arquivo 'core/admin.py'
+    from core.models import Evento #Sherlon: Adicionado
+    admin.site.register(Evento)#Sherlon: Adicionado
+
+Parte 7:
+Definir uma View: Em Django, uma view é uma função Python que recebe uma requisição web e retorna uma resposta web.
+Abra o arquivo core/views.py e adicione o seguinte código:
+    from django.http import HttpResponse
+    def eventos(request):
+        return HttpResponse("Olá, Mundo!")
+
+Parte 8:
+Criar uma pasta chamada "templates", a qual irá conter os arquivos html da aplicação.
+Criar um arquivo .html dentro da pasta templates.
+Criar uma view que renderiza o arquivo .html criado dentro do arquivo 'core/views.py'.
+Criar a rota dentro do arquivo 'agenda/urls.py'
+Adicionar o caminho da pasta template no arquivo de configurações 'agenda/settings.py'
+    'DIRS': [os.path.join(BASE_DIR, 'templates')],
+
+
+
+Parte Final:
+Executar o Servidor de Desenvolvimento: Inicie novamente o servidor de desenvolvimento do Django com o seguinte comando:
+    python manage.py runserver
+Acessar a Página: Abra um navegador da web e acesse http://127.0.0.1:8000/<caminho>/.
+Você pode continuar adicionando mais views, templates e funcionalidades à sua aplicação Django, de acordo com suas necessidades.
