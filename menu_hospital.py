@@ -70,7 +70,7 @@ while True:
 		elif tipo_procedimento == 2:
 			faturamento_procedimento(conexao) #Adiciona/relaciona o faturamento atual com os procedimentos realizados
 		elif tipo_procedimento == 3:
-			listar_dados_Faturamento(conexao, "Faturamento")
+			listar_dados_Faturamento(conexao, "Faturamento") # recofigurar função
 		else:
 			print("Opção inválida!")
 	elif opcao == 5:
