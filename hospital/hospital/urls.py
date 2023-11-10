@@ -16,7 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from core import views #Sherlon: Adicionado para importar as views do meu APP Core
+from django.views.generic import RedirectView 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('example/', views.ola_mundo),
+    path('', RedirectView.as_view(url="/cliente/")), #Definindo a página 'agenda' como Inicial usando RedirectView
+    path('cliente/', views.cliente),
+    path('cliente/submit', views.cliente_submit),
 ]

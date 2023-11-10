@@ -53,11 +53,6 @@ Criar um usuário para a rota 'admin/'
 Acessar a página e logar:
     http://127.0.0.1:8000/admin
 
-
------------------- CONTINUAR DAQUI ------------------
-
-
-
 Parte 5:
 Criar e configurar as tabelas do banco de dados usando o arquivo core/models.py
 Adicionar as classes que representarão as tabelas do banco de dados.
@@ -77,7 +72,8 @@ Transformar as classes criadas em models.py em tabelas do banco de dados:
 Parte 6:
 Registrar o Model criado no arquivo 'core/admin.py'
     from core.models import Evento #Sherlon: Adicionado
-    admin.site.register(Evento)#Sherlon: Adicionado
+    admin.site.register(Evento) #Sherlon: Adicionado
+Agora você poderá acessar a página do administrador pela URL '/admin'
 
 Parte 7:
 Definir uma View: Em Django, uma view é uma função Python que recebe uma requisição web e retorna uma resposta web.
@@ -85,16 +81,21 @@ Abra o arquivo core/views.py e adicione o seguinte código:
     from django.http import HttpResponse
     def eventos(request):
         return HttpResponse("Olá, Mundo!")
+Abra o arquivo hospital/urls.py e adicione o segunte código:
+    from core import views #Sherlon: Adicionado para importar as views do meu APP Core
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('example/', views.ola_mundo),
+    ]
+Agora você poderá acessar o navegador na URL 'example/'
 
 Parte 8:
 Criar uma pasta chamada "templates", a qual irá conter os arquivos html da aplicação.
 Criar um arquivo .html dentro da pasta templates.
 Criar uma view que renderiza o arquivo .html criado dentro do arquivo 'core/views.py'.
-Criar a rota dentro do arquivo 'agenda/urls.py'
-Adicionar o caminho da pasta template no arquivo de configurações 'agenda/settings.py'
+Criar a rota dentro do arquivo 'hospital/urls.py'
+Adicionar o caminho da pasta template no arquivo de configurações 'hospital/settings.py'
     'DIRS': [os.path.join(BASE_DIR, 'templates')],
-
-
 
 Parte Final:
 Executar o Servidor de Desenvolvimento: Inicie novamente o servidor de desenvolvimento do Django com o seguinte comando:
