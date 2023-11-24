@@ -4,6 +4,9 @@ from core.models import Cliente #Sherlon: Adicionado
 
 # Create your views here.
 
+def home(request):
+    return render(request,"index.html")
+
 def ola_mundo(request):
     #return HttpResponse("Olá, Mundo!") #Usando um "html" diretamente no código
     return render(request, 'ola_mundo.html') #Usando um arquivo "html"

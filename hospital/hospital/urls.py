@@ -23,8 +23,9 @@ from django.urls import include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('example/', views.ola_mundo),
-    path('', RedirectView.as_view(url="/cliente/")), #Definindo a página 'agenda' como Inicial usando RedirectView
     path('cliente/', views.cliente),
+    path('home/',views.home),
+    path('', RedirectView.as_view(url="/home/")), #Definindo a página 'agenda' como Inicial usando RedirectView
     path('cliente/submit', views.cliente_submit),
     path('cliente/listar_clientes', views.listar_clientes),
 ]

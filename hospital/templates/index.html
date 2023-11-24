@@ -1,0 +1,20 @@
+{% extends "model-page.html" %}
+
+{% block content %}
+    <title>Programa Hospital</title>
+</head>
+<body>
+    <h1>Hospital Saint Ultima</h1>
+    <a href="/">
+        <button type="submit">Início</button>
+    </a>
+    <!-- realizar verificação do link de cadastro urgente -->
+    <a href="cliente">
+        <button type="submit">Cadastrar novo cliente</button>
+    </a>
+    <!--adcionado botão para listar cliente da page home-->
+    <a href="listar_clientes">
+        <button type="submit">Clientes cadastrados</button>
+    </a>
+
+{% endblock %}
