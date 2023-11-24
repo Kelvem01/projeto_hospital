@@ -1,0 +1,19 @@
+{% extends "model-page.html" %}
+
+{% block content %}
+
+    <h2>Clientes Cadastrados</h2>
+    
+    <!--Voltar ao menu principal-->
+    <a href="/">
+        <button type="submit">Início</button>
+    </a>
+
+    {% for cliente in clientes %}
+        <ul>
+            <li> ID ({{ cliente.id }}) {{cliente.nome}}</li>
+            <li> Contato: {{ cliente.telefone }} | {{cliente.email}}</li>
+        </ul>
+        {% endfor %}
+
+{% endblock %}

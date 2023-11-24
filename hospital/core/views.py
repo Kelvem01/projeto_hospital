@@ -8,6 +8,7 @@ def ola_mundo(request):
     #return HttpResponse("Olá, Mundo!") #Usando um "html" diretamente no código
     return render(request, 'ola_mundo.html') #Usando um arquivo "html"
 
+"""Adiciona o cliente cadastrado no banco de dados"""
 def cliente_submit(request):
     if request.POST:
         nome = request.POST.get("nome")     
@@ -29,11 +30,14 @@ def cliente_submit(request):
     
     return redirect('/')
 
+"""Renderiza a página de cadastro de Clientes"""
 def cliente(request):
     clientes = Cliente.objects.all()
     data = {"cliente": clientes}
     return render(request, 'clientes.html', data)
 
-def listarCliente(request):
+"""Apresenta os clientes cadastrados no sistema"""
+def listar_clientes(request):
     clientes = Cliente.objects.all()
-    return render(request,'listarCliente.html',{"clientes":clientes})
+    data = {"clientes": clientes}
+    return render(request,'listarClientes.html', data)

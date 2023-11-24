@@ -7,7 +7,7 @@ from datetime import datetime
 class Cliente(models.Model):
     nome = models.CharField(max_length=100)
     telefone = models.CharField(max_length=20, blank=True, null=True)
-    email = models.CharField(max_length=50, blank=True, null=True)
+    email = models.EmailField(max_length=50, blank=True, null=True)
     cpf = models.CharField(max_length=15, blank=True, null=True)
     rg = models.CharField(max_length=15, blank=True, null=True)
     profissao = models.CharField(max_length=50, blank=True, null=True)
@@ -18,3 +18,31 @@ class Cliente(models.Model):
     
     def __str__(self):
         return "class <Cliente>"
+
+class Anestesista(models.Model):
+    nome = models.CharField(max_length=100)
+    telefone = models.CharField(max_length=20, blank=True, null=True)
+    email = models.EmailField(max_length=50, blank=True, null=True)
+    cpf = models.CharField(max_length=15, blank=True, null=True)
+    crm = models.CharField(max_length=15, blank=True, null=True)
+    data_cadastro = models.DateTimeField(auto_now=True) #Insere a hora atual neste campo
+
+    class Meta: #Força que o nome da tabela seja "evento" e não "core_evento"
+        db_table = 'Anestesista'
+    
+    def __str__(self):
+        return "class <Anestesista>"
+
+class Cirurgiao(models.Model):
+    nome = models.CharField(max_length=100)
+    telefone = models.CharField(max_length=20, blank=True, null=True)
+    email = models.EmailField(max_length=50, blank=True, null=True)
+    cpf = models.CharField(max_length=15, blank=True, null=True)
+    crm = models.CharField(max_length=15, blank=True, null=True)
+    data_cadastro = models.DateTimeField(auto_now=True) #Insere a hora atual neste campo
+
+    class Meta: #Força que o nome da tabela seja "evento" e não "core_evento"
+        db_table = 'Cirurgiao'
+    
+    def __str__(self):
+        return "class <Cirurgiao>"
