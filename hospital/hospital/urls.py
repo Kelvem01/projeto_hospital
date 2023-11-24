@@ -15,9 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from core import views #Sherlon: Adicionado para importar as views do meu APP Core
+from django.urls import path 
+from core import views  #Sherlon: Adicionado para importar as views do meu APP Core
 from django.views.generic import RedirectView 
+from django.urls import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,4 +26,5 @@ urlpatterns = [
     path('', RedirectView.as_view(url="/cliente/")), #Definindo a página 'agenda' como Inicial usando RedirectView
     path('cliente/', views.cliente),
     path('cliente/submit', views.cliente_submit),
+    path('listarCliente/', include('listarCliente.html')),
 ]

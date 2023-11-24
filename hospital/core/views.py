@@ -33,3 +33,7 @@ def cliente(request):
     clientes = Cliente.objects.all()
     data = {"cliente": clientes}
     return render(request, 'clientes.html', data)
+
+def listarCliente(request):
+    clientes = Cliente.objects.all()
+    return render(request,'listarCliente.html',{"clientes":clientes})
