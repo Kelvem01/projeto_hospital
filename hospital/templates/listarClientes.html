@@ -4,16 +4,11 @@
 
     <h2>Clientes Cadastrados</h2>
     
-    <!--Voltar ao menu principal-->
-    <a href="/">
-        <button type="submit">Início</button>
-    </a>
-
     {% for cliente in clientes %}
         <ul>
-            <li> ID ({{ cliente.id }}) {{cliente.nome}}</li>
+            <li> <strong>ID ({{ cliente.id }}) {{cliente.nome}}</strong></li>
             <li> Contato: {{ cliente.telefone }} | {{cliente.email}}</li>
         </ul>
-        {% endfor %}
+    {% endfor %}
 
 {% endblock %}

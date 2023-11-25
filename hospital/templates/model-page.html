@@ -2,9 +2,14 @@
 <html lang="en">
 <head>
     {% include "model-header.html" %}
-    <img src="logo.png" alt="logo hospital">
 </head>
 <body>
+    
+    <!--Voltar ao menu principal-->
+    <a href="/">
+        <button type="submit">Início</button>
+    </a>
+    
     {% block content %} {% endblock %}
     {% include "model-footer.html" %}
 </body>

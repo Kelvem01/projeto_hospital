@@ -5,7 +5,7 @@ from core.models import Cliente #Sherlon: Adicionado
 # Create your views here.
 
 def home(request):
-    return render(request,"index.html")
+    return render(request, "index.html")
 
 def ola_mundo(request):
     #return HttpResponse("Olá, Mundo!") #Usando um "html" diretamente no código
@@ -42,5 +42,6 @@ def cliente(request):
 """Apresenta os clientes cadastrados no sistema"""
 def listar_clientes(request):
     clientes = Cliente.objects.all()
+    clientes = clientes.order_by('nome')
     data = {"clientes": clientes}
     return render(request,'listarClientes.html', data)
