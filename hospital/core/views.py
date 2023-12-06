@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from core.models import Cliente #Sherlon: Adicionado
+from core.models import * #Sherlon: Adicionado (Importa classes Cliente, Cirurgiao, etc)
 
 # Create your views here.
 
@@ -43,5 +43,38 @@ def cliente(request):
 def listar_clientes(request):
     clientes = Cliente.objects.all()
     clientes = clientes.order_by('nome')
-    data = {"clientes": clientes}
-    return render(request,'listarClientes.html', data)
+    data = {"dados": clientes}
+    return render(request,'listarDados.html', data)
+
+"""Renderiza a página de cadastro de Cirurgioes"""
+def cirurgiao(request):
+    cirurgioes = Cirurgiao.objects.all()
+    data = {"cirurgiao": cirurgioes}
+    return render(request, 'cirurgioes.html', data)
+
+"""Adiciona o cirurgiao cadastrado no banco de dados"""
+def cirurgiao_submit(request):
+    if request.POST:
+        nome = request.POST.get("nome")     
+        telefone = request.POST.get("telefone")
+        email = request.POST.get("email")
+        cpf = request.POST.get("cpf")
+        crm = request.POST.get("crm")
+        
+        #Realiza o INSERT no banco de dados
+        Cirurgiao.objects.create(
+            nome = nome,
+            telefone = telefone,
+            email = email,
+            cpf = cpf,
+            crm = crm
+        )
+    
+    return redirect('/')
+
+"""Apresenta os cirurgioes cadastrados no sistema"""
+def listar_cirurgioes(request):
+    cirurgioes = Cirurgiao.objects.all()
+    cirurgioes = cirurgioes.order_by('nome')
+    data = {"dados": cirurgioes}
+    return render(request,'listarDados.html', data)

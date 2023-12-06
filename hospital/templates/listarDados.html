@@ -1,0 +1,14 @@
+{% extends "model-page.html" %}
+
+{% block content %}
+
+    <h2>Dados Cadastrados</h2>
+    
+    {% for dado in dados %}
+        <ul>
+            <li> <strong>ID ({{ dado.id }}) {{dado.nome}}</strong></li>
+            <li> Contato: {{ dado.telefone }} | {{dado.email}}</li>
+        </ul>
+    {% endfor %}
+
+{% endblock %}

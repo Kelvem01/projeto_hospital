@@ -27,7 +27,12 @@ urlpatterns = [
     path('home/', views.home),
     path('home/cliente', RedirectView.as_view(url="/cliente/")),
     path('home/listar_clientes', RedirectView.as_view(url="/cliente/listar_clientes")),
+    path('home/cirurgiao', RedirectView.as_view(url="/cirurgiao/")),
+    path('home/listar_cirurgioes', RedirectView.as_view(url="/cirurgiao/listar_cirurgioes")),
     path('cliente/', views.cliente),
     path('cliente/submit', views.cliente_submit),
     path('cliente/listar_clientes', views.listar_clientes),
+    path('cirurgiao/', views.cirurgiao),
+    path('cirurgiao/submit', views.cirurgiao_submit),
+    path('cirurgiao/listar_cirurgioes', views.listar_cirurgioes),
 ]
