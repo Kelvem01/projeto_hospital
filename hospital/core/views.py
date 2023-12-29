@@ -30,7 +30,6 @@ def cliente_submit(request):
             rg = rg,
             profissao = profissao
         )
-    
     return redirect('/')
 
 """Renderiza a página de cadastro de Clientes"""
