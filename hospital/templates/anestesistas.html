@@ -1,0 +1,31 @@
+{% extends "model-page.html" %}
+
+{% block content %}
+
+    <h2>Cadastro de Anestesistas</h2>
+
+    <form action="submit" method="POST"> {% csrf_token %}
+        <label>Nome:</label> <br>
+        <input type="text" name="nome" size="18" value="{{ anestesista.nome }}"> <br>
+
+        <label>Telefone:</label> <br>
+        <input type="text" name="telefone" size="18" value="{{ anestesista.telefone }}"> <br>
+
+        <label>Email:</label> <br>
+        <input type="text" name="email" size="18" value="{{ anestesista.email }}"> <br>
+
+        <label>CPF:</label> <br>
+        <input type="text" name="cpf" size="18" value="{{ anestesista.cpf }}"> <br>
+
+        <label>CMR:</label> <br>
+        <input type="text" name="crm" size="18" value="{{ anestesista.crm }}"> <br>
+
+        <button type="submit">Salvar</button>
+    </form>
+
+    <!--Cancelar: volta ao inicio da página-->
+    <a href="/">
+        <button type="submit">Cancelar</button>
+    </a>
+
+{% endblock %}
