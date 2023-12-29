@@ -51,7 +51,7 @@ def cirurgiao(request):
     data = {"cirurgiao": cirurgioes}
     return render(request, 'cirurgioes.html', data)
 
-"""Adiciona o cirurgiao cadastrado no banco de dados"""
+"""Adiciona o cirurgiao ou anestesista cadastrado no banco de dados"""
 def cirurgiao_submit(request):
     if request.POST:
         nome = request.POST.get("nome")     
@@ -76,4 +76,36 @@ def listar_cirurgioes(request):
     cirurgioes = Cirurgiao.objects.all()
     cirurgioes = cirurgioes.order_by('nome')
     data = {"dados": cirurgioes}
+    return render(request,'listarDados.html', data)
+
+"""Renderiza a página de cadastro de Anestesistas"""
+def anestesista(request):
+    anestesistas = Anestesista.objects.all()
+    data = {"anestesista": anestesistas}
+    return render(request, 'anestesistas.html', data)
+
+def anestesista_submit(request):
+    if request.POST:
+        nome = request.POST.get("nome")     
+        telefone = request.POST.get("telefone")
+        email = request.POST.get("email")
+        cpf = request.POST.get("cpf")
+        crm = request.POST.get("crm")
+        
+        #Realiza o INSERT no banco de dados
+        Anestesista.objects.create(
+            nome = nome,
+            telefone = telefone,
+            email = email,
+            cpf = cpf,
+            crm = crm
+        )
+    
+    return redirect('/')
+
+"""Apresenta os anestesistas cadastrados no sistema"""
+def listar_anestesistas(request):
+    anestesistas = Anestesista.objects.all()
+    anestesistas = anestesistas.order_by('nome')
+    data = {"dados": anestesistas}
     return render(request,'listarDados.html', data)
