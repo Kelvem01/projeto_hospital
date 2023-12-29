@@ -1,4 +1,4 @@
-# Gestão Hospitalar
+# Gestão Hospitalar (DEVELOP)
 
 ## Descrição
 Este projeto de gestão hospitalar tem como objetivo facilitar a administração de um hospital, permitindo o gerenciamento eficiente de pacientes, médicos, consultas e registros médicos. O sistema é desenvolvido em Python e SQL, utilizando tecnologias como o Flask e o MySQL.
