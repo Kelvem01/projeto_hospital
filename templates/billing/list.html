@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1><i class="bi bi-currency-dollar"></i> Faturamento</h1>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header"><i class="bi bi-receipt"></i> Faturas</div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Paciente</th>
+                        <th>Convênio</th>
+                        <th>Emissão</th>
+                        <th>Valor Total</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for fat in faturas %}
+                    <tr>
+                        <td>{{ fat.id }}</td>
+                        <td>{{ fat.paciente.nome }}</td>
+                        <td>{{ fat.convenio.nome|default:"-" }}</td>
+                        <td>{{ fat.data_emissao|date:"d/m/Y H:i" }}</td>
+                        <td>R$ {{ fat.calcular_valor_total|floatformat:2 }}</td>
+                        <td>
+                            <span class="badge
+                                {% if fat.status == 'pago' %}bg-success
+                                {% elif fat.status == 'pendente' %}bg-warning
+                                {% elif fat.status == 'cancelado' %}bg-danger
+                                {% else %}bg-info{% endif %}">
+                                {{ fat.get_status_display }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="6" class="text-center">Nenhum faturamento.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

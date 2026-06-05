@@ -1,2 +1,45 @@
-__pycache__
-ambiente_virtual
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+.venv/
+venv/
+ambiente_virtual/
+
+# Environment
+env
+.env.local
+
+# Django
+db.sqlite3
+*.sqlite3
+staticfiles/
+media/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+.docker/
+
+# Coverage
+htmlcov/
+.coverage
+coverage.xml
+
+# Ruff
+.ruff_cache/

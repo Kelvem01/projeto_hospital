@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1><i class="bi bi-building"></i> Salas Cirúrgicas</h1>
+    </div>
+</div>
+
+<div class="row g-3">
+    {% for sala in salas %}
+    <div class="col-md-4 col-lg-3">
+        <div class="card h-100
+            {% if sala.status == 'disponivel' %}border-success
+            {% elif sala.status == 'ocupada' %}border-danger
+            {% elif sala.status == 'manutencao' %}border-warning
+            {% else %}border-secondary{% endif %}">
+            <div class="card-body text-center">
+                <h5 class="card-title">Sala {{ sala.numero }}</h5>
+                <span class="badge
+                    {% if sala.status == 'disponivel' %}bg-success
+                    {% elif sala.status == 'ocupada' %}bg-danger
+                    {% elif sala.status == 'manutencao' %}bg-warning
+                    {% else %}bg-secondary{% endif %} fs-6">
+                    {{ sala.get_status_display }}
+                </span>
+                <p class="mt-2 mb-0 text-muted">R$ {{ sala.valor_hora }}/hora</p>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-info">Nenhuma sala cadastrada.</div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1><i class="bi bi-calendar-check"></i> Agendamento de Cirurgias</h1>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <i class="bi bi-list"></i> Cirurgias Agendadas
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#novaCirurgiaModal">
+                    <i class="bi bi-plus-lg"></i> Nova Cirurgia
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Horário</th>
+                        <th>Paciente</th>
+                        <th>Procedimento</th>
+                        <th>Sala</th>
+                        <th>Cirurgião</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cirurgia in cirurgias %}
+                    <tr>
+                        <td>{{ cirurgia.data|date:"d/m/Y" }}</td>
+                        <td>{{ cirurgia.hora_inicio|time:"H:i" }} - {{ cirurgia.hora_prevista_termino|time:"H:i" }}</td>
+                        <td>{{ cirurgia.paciente.nome }}</td>
+                        <td>{{ cirurgia.procedimento.nome }}</td>
+                        <td>Sala {{ cirurgia.sala.numero }}</td>
+                        <td>{{ cirurgia.cirurgiao.nome }}</td>
+                        <td>
+                            <span class="badge
+                                {% if cirurgia.status == 'agendada' %}bg-primary
+                                {% elif cirurgia.status == 'em_andamento' %}bg-warning
+                                {% elif cirurgia.status == 'realizada' %}bg-success
+                                {% elif cirurgia.status == 'cancelada' %}bg-danger
+                                {% else %}bg-secondary{% endif %}">
+                                {{ cirurgia.get_status_display }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="7" class="text-center text-muted">Nenhuma cirurgia agendada.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

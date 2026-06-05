@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1 class="display-6"><i class="bi bi-hospital"></i> Dashboard - Centro Cirúrgico</h1>
+        <p class="text-muted">Visão geral em tempo real do centro cirúrgico</p>
+    </div>
+</div>
+
+<div class="row g-3 mb-4" hx-get="/api/analytics/dashboard/centro-cirurgico/" hx-trigger="load" hx-swap="outerHTML">
+    <div class="col-md-3">
+        <div class="card text-bg-primary">
+            <div class="card-body text-center">
+                <h5 class="card-title"><i class="bi bi-building"></i> Salas</h5>
+                <p class="display-6" id="total-salas">--</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-bg-success">
+            <div class="card-body text-center">
+                <h5 class="card-title"><i class="bi bi-check-circle"></i> Disponíveis</h5>
+                <p class="display-6" id="salas-disponiveis">--</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-bg-warning">
+            <div class="card-body text-center">
+                <h5 class="card-title"><i class="bi bi-x-circle"></i> Ocupadas</h5>
+                <p class="display-6" id="salas-ocupadas">--</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-bg-info">
+            <div class="card-body text-center">
+                <h5 class="card-title"><i class="bi bi-calendar-check"></i> Cirurgias Hoje</h5>
+                <p class="display-6" id="cirurgias-hoje">--</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header"><i class="bi bi-bar-chart"></i> Ocupação das Salas</div>
+            <div class="card-body">
+                <canvas id="ocupacaoChart" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header"><i class="bi bi-pie-chart"></i> Distribuição</div>
+            <div class="card-body">
+                <canvas id="distribuicaoChart" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header"><i class="bi bi-currency-dollar"></i> Receita (Mensal)</div>
+            <div class="card-body">
+                <canvas id="receitaChart" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header"><i class="bi bi-robot"></i> Insights de IA</div>
+            <div class="card-body">
+                <div id="ai-insights">
+                    <button class="btn btn-outline-primary" hx-post="/api/analytics/ia/analise-ocupacao/" hx-target="#ai-result" hx-swap="innerHTML">
+                        <i class="bi bi-magic"></i> Gerar Análise
+                    </button>
+                    <div id="ai-result" class="mt-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('/api/analytics/dashboard/centro-cirurgico/')
+        .then(r => r.json())
+        .then(data => {
+            document.getElementById('total-salas').textContent = data.total_salas;
+            document.getElementById('salas-disponiveis').textContent = data.salas_disponiveis;
+            document.getElementById('salas-ocupadas').textContent = data.salas_ocupadas;
+            document.getElementById('cirurgias-hoje').textContent = data.cirurgias_hoje;
+        });
+});
+</script>
+{% endblock %}

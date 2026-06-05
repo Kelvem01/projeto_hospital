@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1><i class="bi bi-box"></i> Materiais e Estoque</h1>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-3 mb-3">
+        <div class="card text-bg-danger">
+            <div class="card-body text-center">
+                <h5><i class="bi bi-exclamation-triangle"></i> Estoque Crítico</h5>
+                <p class="display-6" id="criticos-count">{{ criticos|length }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header"><i class="bi bi-list"></i> Materiais</div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nome</th>
+                        <th>Tipo</th>
+                        <th>Estoque</th>
+                        <th>Mínimo</th>
+                        <th>Valor Unit.</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for material in materiais %}
+                    <tr class="{% if material.is_estoque_critico %}table-danger{% endif %}">
+                        <td>{{ material.codigo }}</td>
+                        <td>{{ material.nome }}</td>
+                        <td>{{ material.get_tipo_display }}</td>
+                        <td>{{ material.get_quantidade_em_estoque|floatformat:0 }}</td>
+                        <td>{{ material.estoque_minimo|floatformat:0 }}</td>
+                        <td>R$ {{ material.valor_unitario|floatformat:2 }}</td>
+                        <td>
+                            {% if material.is_estoque_critico %}
+                            <span class="badge bg-danger">Crítico</span>
+                            {% else %}
+                            <span class="badge bg-success">OK</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="7" class="text-center">Nenhum material cadastrado.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

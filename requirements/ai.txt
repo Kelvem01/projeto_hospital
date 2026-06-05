@@ -1,0 +1,8 @@
+-r base.txt
+langchain>=0.2
+langchain-community>=0.2
+langchain-openai>=0.1
+openai>=1.30
+pandas>=2.2
+numpy>=1.26
+scikit-learn>=1.4
