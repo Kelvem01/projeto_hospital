@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}Salas Cirúrgicas - Gestão Hospitalar{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1><i class="bi bi-building me-2"></i>Salas Cirúrgicas</h1>
+    <p>Monitoramento em tempo real das 12 salas</p>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="stat-card card text-center py-3" style="background: rgba(91,192,190,0.08);border-color: var(--success);">
+            <div class="stat-value" style="color:var(--success);">{{ salas_disponiveis }}</div>
+            <div class="stat-label">Disponíveis</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card card text-center py-3" style="background: rgba(231,111,81,0.08);border-color: var(--danger);">
+            <div class="stat-value" style="color:var(--danger);">{{ salas_ocupadas }}</div>
+            <div class="stat-label">Ocupadas</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card card text-center py-3" style="background: rgba(244,162,97,0.08);border-color: var(--warning);">
+            <div class="stat-value" style="color:var(--warning);">{{ salas_manutencao }}</div>
+            <div class="stat-label">Manutenção</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card card text-center py-3" style="background: rgba(58,80,107,0.08);border-color: var(--primary);">
+            <div class="stat-value" style="color:var(--primary);">{{ taxa_ocupacao }}%</div>
+            <div class="stat-label">Taxa de Ocupação</div>
+        </div>
+    </div>
+</div>
+
+<div class="room-grid">
+    {% for sala in salas %}
+    <div class="room-card {% if sala.status == 'disponivel' %}available{% elif sala.status == 'ocupada' %}occupied{% elif sala.status == 'manutencao' %}maintenance{% endif %}">
+        <div class="room-number">{{ sala.numero }}</div>
+        <div class="mb-2">
+            {% if sala.status == 'disponivel' %}<span class="status-dot available"></span>
+            {% elif sala.status == 'ocupada' %}<span class="status-dot occupied"></span>
+            {% elif sala.status == 'manutencao' %}<span class="status-dot maintenance"></span>
+            {% else %}<span class="status-dot scheduled"></span>{% endif %}
+        </div>
+        <div class="room-status">{{ sala.get_status_display }}</div>
+        <small class="text-muted">R$ {{ sala.valor_hora }}/h</small>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center text-muted py-4">Nenhuma sala cadastrada.</div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}Materiais - Gestão Hospitalar{% endblock %}
+
+{% block content %}
+<div class="page-header d-flex justify-content-between align-items-center">
+    <div>
+        <h1><i class="bi bi-box me-2"></i>Materiais</h1>
+        <p>Controle de estoque hospitalar</p>
+    </div>
+    <button class="btn btn-accent"><i class="bi bi-plus-lg me-2"></i>Novo Material</button>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="stat-card card text-center py-3" style="background: rgba(231,111,81,0.08);border-color: var(--danger);">
+            <div class="stat-value" style="color:var(--danger);">{{ criticos|default:"0" }}</div>
+            <div class="stat-label">Estoque Crítico</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card card text-center py-3" style="background: rgba(91,192,190,0.08);border-color: var(--success);">
+            <div class="stat-value" style="color:var(--success);">{{ total_materiais|default:"0" }}</div>
+            <div class="stat-label">Total de Materiais</div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row g-2 mb-3">
+            <div class="col-md-4">
+                <div class="form-search">
+                    <i class="bi bi-search"></i>
+                    <input type="text" class="form-control table-search" placeholder="Buscar material...">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <select class="form-select">
+                    <option value="">Todos os tipos</option>
+                    <option>Material Hospitalar</option>
+                    <option>Medicamento</option>
+                    <option>OPME</option>
+                    <option>Insumo</option>
+                </select>
+            </div>
+        </div>
+        <div class="table-container">
+            <table class="table table-hover">
+                <thead>
+                    <tr><th>Código</th><th>Nome</th><th>Tipo</th><th>Estoque</th><th>Mínimo</th><th>Valor Unit.</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                    {% for m in materiais %}
+                    <tr class="{% if m.is_estoque_critico %}table-danger{% endif %}">
+                        <td class="fw-medium">{{ m.codigo }}</td>
+                        <td>{{ m.nome }}</td>
+                        <td><span class="badge bg-soft-info">{{ m.get_tipo_display }}</span></td>
+                        <td>{{ m.get_quantidade_em_estoque|floatformat:0 }}</td>
+                        <td>{{ m.estoque_minimo|floatformat:0 }}</td>
+                        <td>R$ {{ m.valor_unitario|floatformat:2 }}</td>
+                        <td>
+                            {% if m.is_estoque_critico %}
+                            <span class="badge bg-soft-danger">Crítico</span>
+                            {% else %}
+                            <span class="badge bg-soft-success">OK</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="7" class="text-center text-muted py-4">Nenhum material cadastrado.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

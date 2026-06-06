@@ -1,0 +1,145 @@
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <div class="d-flex align-items-center gap-2 px-3 py-3">
+            <div class="logo-icon">
+                <i class="bi bi-hospital fs-4"></i>
+            </div>
+            <span class="sidebar-brand fw-bold">Gestão Hospitalar</span>
+        </div>
+    </div>
+    <div class="sidebar-user px-3 py-2">
+        <div class="d-flex align-items-center gap-2">
+            <div class="avatar-circle-sm">{{ user.nome|first|upper }}</div>
+            <div class="sidebar-user-info">
+                <small class="fw-semibold text-white">{{ user.nome|default:"Admin" }}</small>
+                <small class="d-block text-white-50">{{ user.get_nivel_display|default:"Administrador" }}</small>
+            </div>
+        </div>
+    </div>
+    <ul class="sidebar-nav">
+        <li class="nav-item">
+            <a href="{% url 'dashboard' %}" class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                <i class="bi bi-grid-1x2"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <li class="nav-section"><span>Pacientes</span></li>
+        <li class="nav-item">
+            <a href="{% url 'patient-list' %}" class="nav-link {% if request.resolver_match.url_name|slice:':7' == 'patient' %}active{% endif %}">
+                <i class="bi bi-people"></i>
+                <span>Lista de Pacientes</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'patient-create' %}" class="nav-link">
+                <i class="bi bi-person-plus"></i>
+                <span>Cadastro</span>
+            </a>
+        </li>
+
+        <li class="nav-section"><span>Centro Cirúrgico</span></li>
+        <li class="nav-item">
+            <a href="{% url 'surgery-list' %}" class="nav-link {% if request.resolver_match.url_name|slice:':7' == 'surgery' %}active{% endif %}">
+                <i class="bi bi-file-medical"></i>
+                <span>Cirurgias</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'surgery-create' %}" class="nav-link">
+                <i class="bi bi-calendar-plus"></i>
+                <span>Agendamentos</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'room-list' %}" class="nav-link">
+                <i class="bi bi-building"></i>
+                <span>Salas</span>
+            </a>
+        </li>
+
+        <li class="nav-section"><span>Procedimentos</span></li>
+        <li class="nav-item">
+            <a href="{% url 'procedure-list' %}" class="nav-link">
+                <i class="bi bi-journal-text"></i>
+                <span>Lista</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'kit-list' %}" class="nav-link">
+                <i class="bi bi-box-seam"></i>
+                <span>Kits Cirúrgicos</span>
+            </a>
+        </li>
+
+        <li class="nav-section"><span>Estoque</span></li>
+        <li class="nav-item">
+            <a href="{% url 'material-list' %}" class="nav-link">
+                <i class="bi bi-box"></i>
+                <span>Materiais</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'consumo-list' %}" class="nav-link">
+                <i class="bi bi-cart-check"></i>
+                <span>Consumo</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{% url 'admission-list' %}" class="nav-link">
+                <i class="bi bi-hospital"></i>
+                <span>Internações</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{% url 'billing-list' %}" class="nav-link">
+                <i class="bi bi-currency-dollar"></i>
+                <span>Faturamento</span>
+            </a>
+        </li>
+
+        <li class="nav-section"><span>Equipes</span></li>
+        <li class="nav-item">
+            <a href="{% url 'doctor-list' %}" class="nav-link">
+                <i class="bi bi-person-badge"></i>
+                <span>Médicos</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'nursing-list' %}" class="nav-link">
+                <i class="bi bi-person-heart"></i>
+                <span>Enfermagem</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'circulante-list' %}" class="nav-link">
+                <i class="bi bi-arrow-left-right"></i>
+                <span>Circulantes</span>
+            </a>
+        </li>
+
+        <li class="nav-section"><span>Relatórios</span></li>
+        <li class="nav-item">
+            <a href="{% url 'report-list' %}" class="nav-link">
+                <i class="bi bi-file-earmark-bar-graph"></i>
+                <span>Relatórios</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{% url 'ai-insights' %}" class="nav-link">
+                <i class="bi bi-robot"></i>
+                <span>IA Insights</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{% url 'admin:index' %}" class="nav-link">
+                <i class="bi bi-gear"></i>
+                <span>Configurações</span>
+            </a>
+        </li>
+    </ul>
+</aside>

@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %}Relatórios - Gestão Hospitalar{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1><i class="bi bi-file-earmark-bar-graph me-2"></i>Relatórios</h1>
+    <p>Exportação de dados e indicadores hospitalares</p>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-4">
+        <div class="card text-center h-100">
+            <div class="card-body py-4">
+                <i class="bi bi-file-earmark-pdf fs-1 text-danger mb-3 d-block"></i>
+                <h6>Relatório de Cirurgias</h6>
+                <p class="text-muted small">Cirurgias realizadas por período</p>
+                <button class="btn btn-outline-danger btn-sm">Exportar PDF</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center h-100">
+            <div class="card-body py-4">
+                <i class="bi bi-file-earmark-spreadsheet fs-1 text-success mb-3 d-block"></i>
+                <h6>Relatório de Faturamento</h6>
+                <p class="text-muted small">Faturamento por período e convênio</p>
+                <button class="btn btn-outline-success btn-sm">Exportar Excel</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center h-100">
+            <div class="card-body py-4">
+                <i class="bi bi-file-earmark-bar-graph fs-1 text-primary mb-3 d-block"></i>
+                <h6>Indicadores Hospitalares</h6>
+                <p class="text-muted small">Taxa de ocupação, tempo médio, etc</p>
+                <button class="btn btn-outline-primary btn-sm">Exportar PDF</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center h-100">
+            <div class="card-body py-4">
+                <i class="bi bi-file-earmark-text fs-1 text-info mb-3 d-block"></i>
+                <h6>Relatório de Estoque</h6>
+                <p class="text-muted small">Materiais críticos e consumo</p>
+                <button class="btn btn-outline-info btn-sm">Exportar Excel</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center h-100">
+            <div class="card-body py-4">
+                <i class="bi bi-file-earmark-medical fs-1 text-warning mb-3 d-block"></i>
+                <h6>Relatório de Equipes</h6>
+                <p class="text-muted small">Produtividade de cirurgiões e circulantes</p>
+                <button class="btn btn-outline-warning btn-sm">Exportar PDF</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center h-100">
+            <div class="card-body py-4">
+                <i class="bi bi-robot fs-1" style="color:var(--accent); mb-3 d-block"></i>
+                <h6>Relatório Inteligente</h6>
+                <p class="text-muted small">Gerado por IA com insights gerenciais</p>
+                <a href="{% url 'ai-insights' %}" class="btn btn-accent btn-sm">Gerar com IA</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

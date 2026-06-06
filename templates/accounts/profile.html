@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Meu Perfil</h2>
+
+<p><strong>Nome Completo:</strong> {{ user.get_full_name|default:user.nome|default:user.email }}</p>
+<p><strong>Email:</strong> {{ user.email }}</p>
+
+{% if user.crm %}<p><strong>CRM:</strong> {{ user.crm }}</p>{% endif %}
+{% if user.is_staff %}<p><strong>Tipo:</strong> Administrador</p>{% endif %}
+
+<p><strong>Cadastrado em:</strong> {{ user.date_joined|date:"d/m/Y às H:i" }}</p>
+<p><strong>Último acesso:</strong> {{ user.last_login|date:"d/m/Y H:i"|default:"Nunca acessou" }}</p>
+
+<hr>
+
+<!-- Botão de Sair -->
+<form method="post" action="{% url 'logout' %}" style="display: inline;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">
+        <i class="bi bi-box-arrow-right me-2"></i> Sair da Conta
+    </button>
+</form>
+
+{% endblock %}

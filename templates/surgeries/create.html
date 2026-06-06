@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}Nova Cirurgia - Gestão Hospitalar{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1><i class="bi bi-calendar-plus me-2"></i>Agendar Cirurgia</h1>
+</div>
+<div class="card">
+    <div class="card-body">
+        <form method="post" class="row g-3">
+            {% csrf_token %}
+            <div class="col-md-4">
+                <label class="form-label">Paciente <span class="text-danger">*</span></label>
+                <select name="paciente" class="form-select" required>
+                    <option value="">Selecione...</option>
+                    {% for p in pacientes %}
+                    <option value="{{ p.id }}">{{ p.nome }} - {{ p.cpf }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Procedimento <span class="text-danger">*</span></label>
+                <select name="procedimento" class="form-select" required>
+                    <option value="">Selecione...</option>
+                    {% for p in procedimentos %}
+                    <option value="{{ p.id }}">{{ p.codigo_interno }} - {{ p.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Sala <span class="text-danger">*</span></label>
+                <select name="sala" class="form-select" required>
+                    <option value="">Selecione...</option>
+                    {% for s in salas %}
+                    <option value="{{ s.id }}">Sala {{ s.numero }} - {{ s.get_status_display }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Cirurgião <span class="text-danger">*</span></label>
+                <select name="cirurgiao" class="form-select" required>
+                    <option value="">Selecione...</option>
+                    {% for c in cirurgioes %}
+                    <option value="{{ c.id }}">Dr. {{ c.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Data <span class="text-danger">*</span></label>
+                <input type="date" name="data" class="form-control" required>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Hora de Início <span class="text-danger">*</span></label>
+                <input type="time" name="hora_inicio" class="form-control" required>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Previsão de Término <span class="text-danger">*</span></label>
+                <input type="time" name="hora_prevista_termino" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Convênio</label>
+                <select name="convenio" class="form-select">
+                    <option value="">Selecione...</option>
+                    {% for c in convenios %}
+                    <option value="{{ c.id }}">{{ c.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-8">
+                <label class="form-label">Observações</label>
+                <textarea name="observacoes" class="form-control" rows="2"></textarea>
+            </div>
+            <div class="col-12 text-end mt-4">
+                <a href="{% url 'surgery-list' %}" class="btn btn-outline-secondary me-2">Cancelar</a>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-2"></i>Agendar</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

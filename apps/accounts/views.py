@@ -2,6 +2,12 @@ from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import User
+from django.views.generic import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import logout as auth_logout
+from django.shortcuts import redirect
+from django.contrib import messages
+
 from .serializers import (
     UserSerializer,
     UserCreateSerializer,
@@ -41,3 +47,18 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     def perform_destroy(self, instance):
         instance.is_active = False
         instance.save()
+
+
+class ProfileView(LoginRequiredMixin, TemplateView):
+    template_name = "accounts/profile.html"
+    login_url = "/accounts/login/"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user"] = self.request.user
+        return context
+    
+    def post(self, request):
+        auth_logout(request)
+        messages.success(request, "Você saiu da conta com sucesso!")
+        return redirect("/")

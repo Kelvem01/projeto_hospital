@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Consumo de Materiais - Gestão Hospitalar{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1><i class="bi bi-cart-check me-2"></i>Consumo de Materiais</h1>
+    <p>Registro de materiais utilizados em cirurgias</p>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-container">
+            <table class="table table-hover">
+                <thead>
+                    <tr><th>Cirurgia</th><th>Material</th><th>Quantidade</th><th>Valor Unit.</th><th>Total</th><th>Tipo</th><th>Data</th></tr>
+                </thead>
+                <tbody>
+                    {% for c in consumos %}
+                    <tr>
+                        <td class="fw-medium">#{{ c.cirurgia.id }} - {{ c.cirurgia.paciente.nome }}</td>
+                        <td>{{ c.material.nome }}</td>
+                        <td>{{ c.quantidade|floatformat:0 }}</td>
+                        <td>R$ {{ c.valor_unitario|floatformat:2 }}</td>
+                        <td class="fw-bold">R$ {% widthratio c.quantidade 1 c.valor_unitario %}</td>
+                        <td>
+                            {% if c.is_extra %}
+                            <span class="badge bg-soft-warning">Extra</span>
+                            {% else %}
+                            <span class="badge bg-soft-primary">Kit</span>
+                            {% endif %}
+                        </td>
+                        <td><small class="text-muted">{{ c.created_at|date:"d/m/Y H:i" }}</small></td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="7" class="text-center text-muted py-4">Nenhum consumo registrado.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

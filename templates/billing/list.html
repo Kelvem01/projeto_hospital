@@ -1,47 +1,52 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% block title %}Faturamento - Gestão Hospitalar{% endblock %}
 
 {% block content %}
-<div class="row mb-4">
-    <div class="col-12">
-        <h1><i class="bi bi-currency-dollar"></i> Faturamento</h1>
+<div class="page-header">
+    <h1><i class="bi bi-currency-dollar me-2"></i>Faturamento</h1>
+    <p>Gestão financeira e contas hospitalares</p>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="stat-card card text-center py-3" style="background: rgba(91,192,190,0.08);border-color: var(--success);">
+            <div class="stat-value" style="color:var(--success);">R$ {{ receita_mensal|default:"0" }}</div>
+            <div class="stat-label">Receita Mensal</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card card text-center py-3" style="background: rgba(244,162,97,0.08);border-color: var(--warning);">
+            <div class="stat-value" style="color:var(--warning);">{{ pendentes|default:"0" }}</div>
+            <div class="stat-label">Pendentes</div>
+        </div>
     </div>
 </div>
 
 <div class="card">
-    <div class="card-header"><i class="bi bi-receipt"></i> Faturas</div>
     <div class="card-body">
-        <div class="table-responsive">
+        <div class="table-container">
             <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Paciente</th>
-                        <th>Convênio</th>
-                        <th>Emissão</th>
-                        <th>Valor Total</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
+                <thead><tr><th>#</th><th>Paciente</th><th>Convênio</th><th>Emissão</th><th>Valor Sala</th><th>Valor Kits</th><th>Valor Extra</th><th>Total</th><th>Status</th></tr></thead>
                 <tbody>
-                    {% for fat in faturas %}
+                    {% for f in faturas %}
                     <tr>
-                        <td>{{ fat.id }}</td>
-                        <td>{{ fat.paciente.nome }}</td>
-                        <td>{{ fat.convenio.nome|default:"-" }}</td>
-                        <td>{{ fat.data_emissao|date:"d/m/Y H:i" }}</td>
-                        <td>R$ {{ fat.calcular_valor_total|floatformat:2 }}</td>
+                        <td class="fw-medium">#{{ f.id }}</td>
+                        <td>{{ f.paciente.nome }}</td>
+                        <td><span class="badge bg-soft-info">{{ f.convenio.nome|default:"Particular" }}</span></td>
+                        <td><small>{{ f.data_emissao|date:"d/m/Y" }}</small></td>
+                        <td>R$ {{ f.calcular_valor_sala|floatformat:2 }}</td>
+                        <td>R$ {{ f.calcular_valor_kits|floatformat:2 }}</td>
+                        <td>R$ {{ f.calcular_valor_materiais_extras|floatformat:2 }}</td>
+                        <td class="fw-bold">R$ {{ f.calcular_valor_total|floatformat:2 }}</td>
                         <td>
-                            <span class="badge
-                                {% if fat.status == 'pago' %}bg-success
-                                {% elif fat.status == 'pendente' %}bg-warning
-                                {% elif fat.status == 'cancelado' %}bg-danger
-                                {% else %}bg-info{% endif %}">
-                                {{ fat.get_status_display }}
-                            </span>
+                            {% if f.status == 'pago' %}<span class="badge bg-soft-success">Pago</span>
+                            {% elif f.status == 'pendente' %}<span class="badge bg-soft-warning">Pendente</span>
+                            {% elif f.status == 'cancelado' %}<span class="badge bg-soft-danger">Cancelado</span>
+                            {% else %}<span class="badge bg-soft-info">{{ f.get_status_display }}</span>{% endif %}
                         </td>
                     </tr>
                     {% empty %}
-                    <tr><td colspan="6" class="text-center">Nenhum faturamento.</td></tr>
+                    <tr><td colspan="9" class="text-center text-muted py-4"><i class="bi bi-inbox me-2"></i>Nenhum faturamento encontrado.</td></tr>
                     {% endfor %}
                 </tbody>
             </table>

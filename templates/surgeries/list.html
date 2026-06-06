@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}Cirurgias - Gestão Hospitalar{% endblock %}
+
+{% block content %}
+<div class="page-header d-flex justify-content-between align-items-center">
+    <div>
+        <h1><i class="bi bi-file-medical me-2"></i>Cirurgias</h1>
+        <p>Gerenciamento de cirurgias e agendamentos</p>
+    </div>
+    <a href="{% url 'surgery-create' %}" class="btn btn-accent"><i class="bi bi-plus-lg me-2"></i>Nova Cirurgia</a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row g-2 mb-3">
+            <div class="col-md-4">
+                <div class="form-search">
+                    <i class="bi bi-search"></i>
+                    <input type="text" class="form-control table-search" placeholder="Buscar cirurgia...">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <select class="form-select" id="statusFilter">
+                    <option value="">Todos os status</option>
+                    <option value="agendada">Agendada</option>
+                    <option value="em_andamento">Em Andamento</option>
+                    <option value="realizada">Realizada</option>
+                    <option value="cancelada">Cancelada</option>
+                </select>
+            </div>
+        </div>
+        <div class="table-container">
+            <table class="table table-hover">
+                <thead>
+                    <tr><th>Paciente</th><th>Procedimento</th><th>Sala</th><th>Data</th><th>Horário</th><th>Cirurgião</th><th>Status</th><th>Ações</th></tr>
+                </thead>
+                <tbody>
+                    {% for c in cirurgias %}
+                    <tr>
+                        <td class="fw-medium">{{ c.paciente.nome }}</td>
+                        <td>{{ c.procedimento.nome }}</td>
+                        <td>Sala {{ c.sala.numero }}</td>
+                        <td>{{ c.data|date:"d/m/Y" }}</td>
+                        <td>{{ c.hora_inicio|time:"H:i" }}</td>
+                        <td>{{ c.cirurgiao.nome }}</td>
+                        <td>
+                            {% if c.status == 'agendada' %}<span class="badge bg-soft-primary">Agendada</span>
+                            {% elif c.status == 'em_andamento' %}<span class="badge bg-soft-warning">Em Andamento</span>
+                            {% elif c.status == 'realizada' %}<span class="badge bg-soft-success">Realizada</span>
+                            {% elif c.status == 'cancelada' %}<span class="badge bg-soft-danger">Cancelada</span>
+                            {% else %}<span class="badge bg-soft-info">{{ c.get_status_display }}</span>{% endif %}
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="#" class="btn btn-sm btn-outline-primary btn-icon"><i class="bi bi-eye"></i></a>
+                                <a href="#" class="btn btn-sm btn-outline-secondary btn-icon"><i class="bi bi-pencil"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="8" class="text-center text-muted py-4"><i class="bi bi-inbox me-2"></i>Nenhuma cirurgia encontrada.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

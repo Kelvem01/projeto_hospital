@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard - Gestão Hospitalar{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1><i class="bi bi-grid-1x2 me-2"></i>Dashboard</h1>
+            <p>Resumo operacional do centro cirúrgico</p>
+        </div>
+        <div class="d-flex gap-2">
+            <button class="btn btn-outline-primary btn-sm" onclick="window.location.reload()">
+                <i class="bi bi-arrow-clockwise"></i> Atualizar
+            </button>
+            <span class="text-muted small align-self-center"><i class="bi bi-calendar3 me-1"></i>{% now "d/m/Y" %}</span>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 fade-in">
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="stat-card card h-100">
+            <div class="d-flex align-items-start justify-content-between">
+                <div>
+                    <div class="stat-value">{{ stats.total_salas|default:"12" }}</div>
+                    <div class="stat-label">Total de Salas</div>
+                </div>
+                <div class="stat-icon" style="background: rgba(58,80,107,0.12); color: var(--primary);">
+                    <i class="bi bi-building"></i>
+                </div>
+            </div>
+            <div class="mt-2 d-flex gap-2">
+                <small class="stat-change text-success"><i class="bi bi-circle-fill me-1" style="color:var(--success);font-size:0.5rem;"></i>{{ stats.salas_disponiveis|default:"5" }} livres</small>
+                <small class="stat-change text-danger"><i class="bi bi-circle-fill me-1" style="color:var(--danger);font-size:0.5rem;"></i>{{ stats.salas_ocupadas|default:"6" }} ocupadas</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="stat-card card h-100">
+            <div class="d-flex align-items-start justify-content-between">
+                <div>
+                    <div class="stat-value">{{ stats.cirurgias_hoje|default:"0" }}</div>
+                    <div class="stat-label">Cirurgias Hoje</div>
+                </div>
+                <div class="stat-icon" style="background: rgba(91,192,190,0.12); color: var(--accent);">
+                    <i class="bi bi-file-medical"></i>
+                </div>
+            </div>
+            <div class="mt-2">
+                <small class="stat-change" style="color:var(--primary);">Tempo médio: {{ stats.tempo_medio_cirurgico|default:"1h45" }}</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="stat-card card h-100">
+            <div class="d-flex align-items-start justify-content-between">
+                <div>
+                    <div class="stat-value">{{ stats.taxa_ocupacao|default:"0" }}%</div>
+                    <div class="stat-label">Taxa de Ocupação</div>
+                </div>
+                <div class="stat-icon" style="background: rgba(244,162,97,0.12); color: var(--warning);">
+                    <i class="bi bi-pie-chart"></i>
+                </div>
+            </div>
+            <div class="mt-2">
+                <div class="progress" style="height:6px;">
+                    <div class="progress-bar" style="width:{{ stats.taxa_ocupacao|default:50 }}%;background:var(--accent);"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="stat-card card h-100">
+            <div class="d-flex align-items-start justify-content-between">
+                <div>
+                    <div class="stat-value">R$ {{ receita_mensal|default:"0" }}</div>
+                    <div class="stat-label">Receita Mensal</div>
+                </div>
+                <div class="stat-icon" style="background: rgba(74,144,217,0.12); color: var(--info);">
+                    <i class="bi bi-currency-dollar"></i>
+                </div>
+            </div>
+            <div class="mt-2">
+                <small class="stat-change text-success"><i class="bi bi-arrow-up"></i> 12% vs mês anterior</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 mt-2">
+    <div class="col-12 col-xl-8">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-bar-chart me-2"></i>Ocupação das Salas</span>
+                <span class="badge bg-soft-primary">Hoje</span>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="ocupacaoChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-xl-4">
+        <div class="card">
+            <div class="card-header"><i class="bi bi-pie-chart me-2"></i>Cirurgias por Especialidade</div>
+            <div class="card-body">
+                <div class="chart-container" style="height:220px;">
+                    <canvas id="especialidadeChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 mt-2">
+    <div class="col-12 col-xl-6">
+        <div class="card">
+            <div class="card-header"><i class="bi bi-graph-up me-2"></i>Receita Mensal</div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="receitaChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-xl-6">
+        <div class="card">
+            <div class="card-header"><i class="bi bi-box me-2"></i>Consumo de Materiais</div>
+            <div class="card-body">
+                <div class="chart-container" style="height:220px;">
+                    <canvas id="consumoChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 mt-2">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-clock-history me-2"></i>Próximas Cirurgias</span>
+                <a href="{% url 'surgery-list' %}" class="btn btn-sm btn-outline-primary">Ver todas</a>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-container">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr><th>Paciente</th><th>Procedimento</th><th>Sala</th><th>Horário</th><th>Cirurgião</th><th>Status</th></tr>
+                        </thead>
+                        <tbody id="proximas-cirurgias">
+                            <tr><td colspan="6" class="text-center text-muted py-4"><i class="bi bi-arrow-clockwise me-2"></i>Carregando...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('/api/scheduling/?page_size=5')
+        .then(r => r.ok ? r.json() : { results: [] })
+        .then(data => {
+            var tbody = document.getElementById('proximas-cirurgias');
+            if (!data.results || data.results.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-4">Nenhuma cirurgia agendada</td></tr>';
+                return;
+            }
+            tbody.innerHTML = data.results.map(function(c) {
+                var statusMap = {
+                    'agendada': '<span class="badge bg-soft-primary">Agendada</span>',
+                    'em_andamento': '<span class="badge bg-soft-warning">Em Andamento</span>',
+                    'realizada': '<span class="badge bg-soft-success">Realizada</span>',
+                    'cancelada': '<span class="badge bg-soft-danger">Cancelada</span>',
+                };
+                return '<tr>' +
+                    '<td class="fw-medium">' + (c.paciente_nome || '---') + '</td>' +
+                    '<td>' + (c.procedimento_nome || '---') + '</td>' +
+                    '<td>Sala ' + (c.sala_numero || '---') + '</td>' +
+                    '<td>' + c.hora_inicio + ' - ' + c.hora_prevista_termino + '</td>' +
+                    '<td>' + (c.cirurgiao_nome || '---') + '</td>' +
+                    '<td>' + (statusMap[c.status] || c.status) + '</td>' +
+                    '</tr>';
+            }).join('');
+        })
+        .catch(function() {
+            document.getElementById('proximas-cirurgias').innerHTML = '<tr><td colspan="6" class="text-center text-muted py-4">Erro ao carregar</td></tr>';
+        });
+});
+</script>
+{% endblock %}

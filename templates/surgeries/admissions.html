@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Internações - Gestão Hospitalar{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1><i class="bi bi-hospital me-2"></i>Internações</h1>
+    <p>Controle de internações e leitos</p>
+</div>
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-list me-2"></i>Pacientes Internados</span>
+        <span class="badge bg-soft-primary">{{ internacoes.count }} internações</span>
+    </div>
+    <div class="card-body">
+        <div class="table-container">
+            <table class="table table-hover">
+                <thead><tr><th>Paciente</th><th>Leito</th><th>Entrada</th><th>Alta</th><th>Dias</th><th>Status</th></tr></thead>
+                <tbody>
+                    {% for i in internacoes %}
+                    <tr>
+                        <td class="fw-medium">{{ i.paciente.nome }}</td>
+                        <td>{{ i.leito.numero }} ({{ i.leito.ala }})</td>
+                        <td>{{ i.data_entrada|date:"d/m/Y H:i" }}</td>
+                        <td>{{ i.data_alta|date:"d/m/Y H:i"|default:"-" }}</td>
+                        <td>
+                            {% if i.data_alta %}
+                                {{ i.data_alta|timesince:i.data_entrada }}
+                            {% else %}
+                                {{ i.data_entrada|timesince }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if i.data_alta %}
+                            <span class="badge bg-soft-success">Alta</span>
+                            {% else %}
+                            <span class="badge bg-soft-primary">Internado</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="6" class="text-center text-muted py-4">Nenhuma internação ativa.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

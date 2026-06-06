@@ -1,114 +1,35 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="pt-br" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Gestão Hospitalar - Centro Cirúrgico{% endblock %}</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='%233A506B' d='M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z'/></svg>">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="/static/css/style.css" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">
-                <i class="bi bi-hospital"></i> Gestão Hospitalar
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-building"></i> Centro Cirúrgico
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#" hx-get="/api/analytics/dashboard/centro-cirurgico/" hx-target="#main-content">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="/salas/">Salas</a></li>
-                            <li><a class="dropdown-item" href="/agendamentos/">Agendamentos</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="/cirurgias/">Cirurgias</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-people"></i> Pacientes
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/pacientes/">Pacientes</a></li>
-                            <li><a class="dropdown-item" href="/convenios/">Convênios</a></li>
-                            <li><a class="dropdown-item" href="/internacoes/">Internações</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-badge"></i> Equipe
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/cirurgioes/">Cirurgiões</a></li>
-                            <li><a class="dropdown-item" href="/anestesistas/">Anestesistas</a></li>
-                            <li><a class="dropdown-item" href="/enfermagem/">Enfermagem</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-box"></i> Materiais
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/materiais/">Materiais</a></li>
-                            <li><a class="dropdown-item" href="/kits/">Kits Cirúrgicos</a></li>
-                            <li><a class="dropdown-item" href="/estoque/">Estoque</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-currency-dollar"></i> Financeiro
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/faturamento/">Faturamento</a></li>
-                            <li><a class="dropdown-item" href="#" hx-get="/api/analytics/dashboard/financeiro/" hx-target="#main-content">Dashboard Financeiro</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" hx-get="/api/analytics/ia/relatorio-gerencial/" hx-target="#main-content">
-                            <i class="bi bi-robot"></i> IA Insights
-                        </a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle"></i> {{ user.nome|default:"Usuário" }}
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="/admin/">Admin</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="/api/accounts/logout/">Sair</a></li>
-                        </ul>
-                    </li>
-                </ul>
+    <div class="app-wrapper">
+        {% include 'includes/sidebar.html' %}
+        <div class="main-content" id="mainContent">
+            {% include 'includes/navbar.html' %}
+            <div class="content-wrapper">
+                {% include 'includes/breadcrumbs.html' %}
+                {% include 'includes/alerts.html' %}
+                {% block content %}{% endblock %}
             </div>
-        </div>
-    </nav>
-
-    <div class="container-fluid mt-3">
-        <div id="main-content">
-            {% block content %}{% endblock %}
+            {% include 'includes/footer.html' %}
         </div>
     </div>
 
-    <footer class="footer mt-5 py-3 bg-light">
-        <div class="container text-center text-muted">
-            <small>&copy; {% now "Y" %} Gestão Hospitalar - Centro Cirúrgico</small>
-        </div>
-    </footer>
+    {% include 'includes/modals.html' %}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://unpkg.com/htmx.org@2.0.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <script src="/static/js/main.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

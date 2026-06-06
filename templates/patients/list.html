@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}Pacientes - Gestão Hospitalar{% endblock %}
+
+{% block content %}
+<div class="page-header d-flex justify-content-between align-items-center">
+    <div>
+        <h1><i class="bi bi-people me-2"></i>Pacientes</h1>
+        <p>Gerenciamento de pacientes e convênios</p>
+    </div>
+    <a href="{% url 'patient-create' %}" class="btn btn-accent"><i class="bi bi-plus-lg me-2"></i>Novo Paciente</a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row g-2 mb-3">
+            <div class="col-md-6">
+                <div class="form-search">
+                    <i class="bi bi-search"></i>
+                    <input type="text" class="form-control table-search" placeholder="Buscar paciente por nome, CPF ou e-mail...">
+                </div>
+            </div>
+        </div>
+        <div class="table-container">
+            <table class="table table-hover">
+                <thead>
+                    <tr><th>Nome</th><th>CPF</th><th>E-mail</th><th>Telefone</th><th>Convênio</th><th>Cadastro</th><th>Ações</th></tr>
+                </thead>
+                <tbody>
+                    {% for p in pacientes %}
+                    <tr>
+                        <td class="fw-medium">{{ p.nome }}</td>
+                        <td>{{ p.cpf }}</td>
+                        <td>{{ p.email|default:"-" }}</td>
+                        <td>{{ p.telefone|default:"-" }}</td>
+                        <td><span class="badge bg-soft-info">{{ p.convenio.nome|default:"Particular" }}</span></td>
+                        <td><small class="text-muted">{{ p.created_at|date:"d/m/Y" }}</small></td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="#" class="btn btn-sm btn-outline-primary btn-icon"><i class="bi bi-eye"></i></a>
+                                <a href="#" class="btn btn-sm btn-outline-secondary btn-icon"><i class="bi bi-pencil"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="7" class="text-center text-muted py-4"><i class="bi bi-inbox me-2"></i>Nenhum paciente cadastrado.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

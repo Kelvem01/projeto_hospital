@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block title %}IA Insights - Gestão Hospitalar{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1><i class="bi bi-robot me-2"></i>IA Insights</h1>
+    <p>Análises inteligentes geradas por inteligência artificial</p>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-lg-4">
+        <div class="card text-center h-100">
+            <div class="card-body py-4">
+                <div class="stat-icon mx-auto mb-3" style="width:56px;height:56px;background:rgba(58,80,107,0.12);border-radius:16px;display:flex;align-items:center;justify-content:center;">
+                    <i class="bi bi-building fs-3" style="color:var(--primary);"></i>
+                </div>
+                <h5>Análise de Ocupação</h5>
+                <p class="text-muted small">Identifique horários ociosos, salas subutilizadas e gargalos operacionais.</p>
+                <button class="btn btn-primary w-100" onclick="gerarInsight('ocupacao')">
+                    <i class="bi bi-magic me-2"></i>Gerar Análise
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card text-center h-100">
+            <div class="card-body py-4">
+                <div class="stat-icon mx-auto mb-3" style="width:56px;height:56px;background:rgba(91,192,190,0.12);border-radius:16px;display:flex;align-items:center;justify-content:center;">
+                    <i class="bi bi-currency-dollar fs-3" style="color:var(--accent);"></i>
+                </div>
+                <h5>Análise Financeira</h5>
+                <p class="text-muted small">Descubra procedimentos mais lucrativos e oportunidades de redução de custos.</p>
+                <button class="btn btn-accent w-100" onclick="gerarInsight('financeiro')">
+                    <i class="bi bi-magic me-2"></i>Gerar Análise
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card text-center h-100">
+            <div class="card-body py-4">
+                <div class="stat-icon mx-auto mb-3" style="width:56px;height:56px;background:rgba(74,144,217,0.12);border-radius:16px;display:flex;align-items:center;justify-content:center;">
+                    <i class="bi bi-file-text fs-3" style="color:var(--info);"></i>
+                </div>
+                <h5>Relatório Gerencial</h5>
+                <p class="text-muted small">Resumo executivo completo com indicadores e recomendações estratégicas.</p>
+                <button class="btn btn-primary w-100" onclick="gerarInsight('gerencial')" style="background:var(--info);border-color:var(--info);">
+                    <i class="bi bi-magic me-2"></i>Gerar Relatório
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card" id="insightResult">
+    <div class="card-header"><i class="bi bi-chat-dots me-2"></i>Resultado da Análise</div>
+    <div class="card-body">
+        <div id="insightContent" class="text-center text-muted py-4">
+            <i class="bi bi-robot fs-1 d-block mb-2"></i>
+            <p>Clique em um dos botões acima para gerar uma análise inteligente.<br>
+            <small class="text-muted">Requer OpenAI API Key configurada.</small></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function gerarInsight(tipo) {
+    var content = document.getElementById('insightContent');
+    content.innerHTML = '<div class="text-center py-4"><div class="spinner-border text-primary mb-3" role="status"></div><p>Gerando análise com IA...</p></div>';
+
+    var endpoint = tipo === 'ocupacao' ? '/api/analytics/ia/analise-ocupacao/' :
+                   tipo === 'financeiro' ? '/api/analytics/ia/analise-financeira/' :
+                   '/api/analytics/ia/relatorio-gerencial/';
+
+    fetch(endpoint, { method: 'POST', headers: { 'X-CSRFToken': '{{ csrf_token }}' } })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            var texto = data.analise || data.relatorio || JSON.stringify(data);
+            content.innerHTML = '<div class="p-3 bg-light rounded-3"><i class="bi bi-robot text-primary me-2"></i>' + texto + '</div>';
+        })
+        .catch(function() {
+            content.innerHTML = '<div class="alert alert-warning mb-0"><i class="bi bi-exclamation-triangle me-2"></i>IA não disponível. Configure OPENAI_API_KEY ou tente novamente.</div>';
+        });
+}
+</script>
+{% endblock %}
